@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_main" tools:context="de.rwth_aachen.ziffer.MainActivity">
+    tools:showIn="@layout/activity_main" tools:context="de.rwth_aachen.ziffer.MainActivity54">
 
     <ListView
         android:layout_width="match_parent"
