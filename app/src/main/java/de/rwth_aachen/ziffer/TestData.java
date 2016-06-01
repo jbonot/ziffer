@@ -22,4 +22,18 @@ public class TestData {
                 new EventListItem("Deutsch B1 Tutor Session, Thursday 7:30PM, Römerlager 1 Study Room.", "Hosted by Julia. Only for residents at Römerlager Studentenwohnheim.")
         });
     }
+    /**
+     * Creates an adapter for the notifications with sample data.
+     *
+     * @param context
+     * @return
+     */
+    public static ListAdapter getNotificationListAdapter(Context context){
+        return new NotificationListAdapter(context, new NotificationListItem[]{
+                new NotificationListItem("Joram has joined your event \"Deutsch A1 Tutor Session.\"", "1 min ago"),
+                new NotificationListItem("Uri has joined your event \"Deutsch A1 Tutor Session.\"", "2 hrs ago"),
+                new NotificationListItem("Areej has joined your event \"Deutsch A1 Tutor Session.\"", "1 day ago"),
+                new NotificationListItem("Marwan has joined your event \"Deutsch A1 Tutor Session.\"", "1 day ago")
+        });
+    }
 }
