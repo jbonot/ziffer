@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -34,6 +35,14 @@ public class MyCreatedEvents extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.listView);
         listAdapter = TestData.getEventListAdapter(this);
         listView.setAdapter(listAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MyCreatedEvents.this, EventDetails.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

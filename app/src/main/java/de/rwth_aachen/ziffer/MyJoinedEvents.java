@@ -21,5 +21,13 @@ public class MyJoinedEvents extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.listView);
         listAdapter = TestData.getEventListAdapter(this);
         listView.setAdapter(listAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MyJoinedEvents.this, EventDetails.class);
+                startActivity(intent);
+            }
+        });
     }
 }
