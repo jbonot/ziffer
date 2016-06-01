@@ -28,6 +28,11 @@
         </activity>
         <activity android:name=".Notifications" >
         </activity>
+        <activity
+            android:name=".MyCreatedEvents"
+            android:label="@string/title_activity_my_created_events"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
