@@ -33,6 +33,8 @@
             android:label="@string/title_activity_my_created_events"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".MyJoinedEvents" >
+        </activity>
     </application>
 
 </manifest>
