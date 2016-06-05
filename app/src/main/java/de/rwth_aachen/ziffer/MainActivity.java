@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_notifications) {
+            Intent intent = new Intent(this, Notifications.class);
+            startActivity(intent);
             return true;
         }
 
@@ -88,10 +90,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            // Handle the camera action
-        } else if (id == R.id.nav_notifications) {
-            Intent intent = new Intent(this, Notifications.class);
-            startActivity(intent);
+
         } else if (id == R.id.nav_created_events) {
             Intent intent = new Intent(this, MyCreatedEvents.class);
             startActivity(intent);

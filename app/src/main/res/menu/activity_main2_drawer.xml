@@ -4,8 +4,6 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_profile"
             android:title="My Profile" />
-        <item android:id="@+id/nav_notifications"
-            android:title="Notifications" />
         <item android:id="@+id/nav_created_events"
             android:title="My Created Events" />
         <item android:id="@+id/nav_joined_events"

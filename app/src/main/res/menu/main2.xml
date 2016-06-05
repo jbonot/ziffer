@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    
+    <!-- Notifications -->
+    <item
+        android:id="@+id/action_notifications"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/action_notifications"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Filter Events -->
+    <item android:id="@+id/action_filter" android:title="@string/action_filter"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
