@@ -44,6 +44,16 @@
             <category android:name="android.intent.category.DEFAULT"/>
         </intent-filter>
     </activity>
+        <activity android:name=".EventDetails" >
+        </activity>
+        <activity android:name=".Notifications" >
+        </activity>
+        <activity
+            android:name=".MyCreatedEvents"
+            android:label="@string/title_activity_my_created_events" >
+        </activity>
+        <activity android:name=".MyJoinedEvents" >
+        </activity>
 
 </application>
 </manifest>
