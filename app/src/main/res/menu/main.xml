@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
+    <item android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView" />
+
     <!-- Notifications -->
     <item
         android:id="@+id/action_notifications"
         android:icon="@android:drawable/ic_menu_mapmode"
         android:title="@string/action_notifications"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <!-- Filter Events -->
     <item android:id="@+id/action_filter" android:title="@string/action_filter"
