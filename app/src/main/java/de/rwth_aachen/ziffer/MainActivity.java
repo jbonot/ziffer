@@ -89,6 +89,10 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, Notifications.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_filter) {
+            Intent intent = new Intent(this, FilterActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
