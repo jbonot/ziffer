@@ -93,8 +93,10 @@ public class LoginFragment extends Fragment  {
     @Override
     public void onResume() {
         super.onResume();
-        Profile profile = Profile.getCurrentProfile();
-        mTextDetails.setText(constructWelcomeMessage(profile));
+        
+        // Go immediately to the home page.
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
