@@ -56,6 +56,8 @@
             </activity>
             <activity android:name=".MyJoinedEvents" >
             </activity>
+            <activity android:name=".ProfileActivity" >
+            </activity>
             <activity android:name=".SearchResultsActivity" >
                 <intent-filter>
                     <action android:name="android.intent.action.SEARCH" />
