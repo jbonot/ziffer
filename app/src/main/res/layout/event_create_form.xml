@@ -91,43 +91,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Flexible Time"
-                        android:id="@+id/textView4"
-                        android:gravity="left"
-                        android:layout_weight="1" />
-
-                    <Switch
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/switchFlexibleT"
-                        android:gravity="right"
-                        android:layout_weight="1"  />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_marginTop="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Start"
                         android:id="@+id/textView5"
                         android:gravity="left"
                         android:layout_weight="1"  />
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="May 23     13:00"
-                        android:id="@+id/textView2"
-                        android:clickable="false" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="May 23"
+                            android:id="@+id/dateStart"
+                            android:clickable="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="13:00"
+                            android:id="@+id/timeStart"
+                            android:clickable="false"
+                            android:layout_marginLeft="48dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -152,10 +143,36 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="14:00"
-                        android:id="@+id/textView3"
+                        android:id="@+id/timeEnd"
                         android:clickable="false"
                         android:autoText="false" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Duration"
+                        android:id="@+id/textView8"
+                        android:gravity="left"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="1 hour"
+                        android:id="@+id/duration"
+                        android:clickable="false"
+                        android:autoText="false" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -178,17 +195,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Max Attendees"
-                        android:id="@+id/textView"
+                        android:text="Min Attendees"
+                        android:id="@+id/textView7"
                         android:gravity="left"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"  />
 
                     <Spinner
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinnerMaxAttendees"
+                        android:id="@+id/minAttendees"
                         android:gravity="right"
                         android:textAlignment="center" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -202,19 +220,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="RSVP Deadline"
-                        android:id="@+id/textView7"
+                        android:text="Max Attendees"
+                        android:id="@+id/textView"
                         android:gravity="left"
-                        android:layout_weight="1"  />
+                        android:layout_weight="1" />
 
                     <Spinner
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinnerRsvpDeadline"
+                        android:id="@+id/maxAttendees"
                         android:gravity="right"
                         android:textAlignment="center" />
-
                 </LinearLayout>
+
             </LinearLayout>
 
 
@@ -223,11 +241,12 @@
                 android:layout_height="110dp"
                 android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/editText3"
+                android:id="@+id/description"
                 android:hint="Description"
                 android:gravity="top"
                 android:layout_marginTop="40dp"
                 android:background="@android:color/white" />
+
         </LinearLayout>
     </ScrollView>
 

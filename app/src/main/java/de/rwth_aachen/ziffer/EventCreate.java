@@ -42,15 +42,8 @@ public class EventCreate extends AppCompatActivity {
         categories.add("20");
         categories.add("30");
 
-        this.setupSpinner((Spinner) findViewById(R.id.spinnerMaxAttendees), categories);
-
-        categories = new ArrayList<String>();
-        categories.add("1 hour before");
-        categories.add("6 hours before");
-        categories.add("1 day before");
-        categories.add("3 days before");
-
-        this.setupSpinner((Spinner) findViewById(R.id.spinnerRsvpDeadline), categories);
+        this.setupSpinner((Spinner) findViewById(R.id.maxAttendees), categories);
+        this.setupSpinner((Spinner) findViewById(R.id.minAttendees), categories);
     }
 
     private void setupSpinner(Spinner spinner, List<String> values) {
