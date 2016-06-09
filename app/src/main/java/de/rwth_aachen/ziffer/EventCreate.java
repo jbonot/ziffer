@@ -1,21 +1,69 @@
 package de.rwth_aachen.ziffer;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class EventCreate extends AppCompatActivity {
+public class EventCreate extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_create_form);
+        Calendar c = Calendar.getInstance();
+
+        TextView timeStart = (TextView)findViewById(R.id.timeStart);
+        timeStart.setText(c.get(Calendar.HOUR_OF_DAY) + 1 + ":00");
+        timeStart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", v.getId());
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.setArguments(bundle);
+                newFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
+
+        TextView timeEnd = (TextView)findViewById(R.id.timeEnd);
+        timeEnd.setText(c.get(Calendar.HOUR_OF_DAY) + 2 + ":00");
+        timeEnd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", v.getId());
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.setArguments(bundle);
+                newFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
+
+        ((TextView)findViewById(R.id.duration)).setText("1 hour");
+
+        TextView dateStart = (TextView)findViewById(R.id.dateStart);
+        dateStart.setText(DatePickerFragment.MONTHS[c.get(Calendar.MONTH)] + " " + c.get(Calendar.DAY_OF_MONTH));
+        dateStart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", v.getId());
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.setArguments(bundle);
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
