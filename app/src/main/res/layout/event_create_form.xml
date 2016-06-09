@@ -26,13 +26,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:padding="10dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="12dp"
+                android:padding="16dp">
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinnerEventType" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginTop="16dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -54,7 +63,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/white"
                 android:padding="10dp">
 
@@ -62,8 +71,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_marginTop="12dp">
+                    android:gravity="center_vertical|center_horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,7 +167,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/white">
 
                 <LinearLayout
@@ -218,11 +226,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="130dp"
                 android:inputType="textMultiLine"
-                android:ems="10"
                 android:id="@+id/description"
                 android:hint="Description"
                 android:gravity="top"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
                 android:background="@android:color/white" />
 
         </LinearLayout>
