@@ -1,5 +1,6 @@
 package de.rwth_aachen.ziffer;
 
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
-        searchView.setMaxWidth(500);
+        searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
         searchView.setQueryHint("Search");
         return true;
     }
@@ -115,11 +116,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_notifications) {
-            Intent intent = new Intent(this, Notifications.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_filter) {
+        if (id == R.id.action_filter) {
             Intent intent = new Intent(this, FilterActivity.class);
             startActivity(intent);
             return true;
