@@ -29,5 +29,42 @@ public class Notifications extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.selectedHome).setVisibility(View.GONE);
+        findViewById(R.id.selectedEvents).setVisibility(View.GONE);
+        findViewById(R.id.selectedProfile).setVisibility(View.GONE);
+        findViewById(R.id.selectedNotifications).setVisibility(View.VISIBLE);
+
+        findViewById(R.id.navHome).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Notifications.this, MainActivity.class));
+            }
+        });
+
+        findViewById(R.id.navEvents).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Notifications.this, MyJoinedEvents.class));
+            }
+        });
+
+        findViewById(R.id.navProfile).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Notifications.this, ProfileActivity.class));
+            }
+        });
+
+        findViewById(R.id.navNotifications).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Notifications.this, Notifications.class));
+            }
+        });
     }
 }

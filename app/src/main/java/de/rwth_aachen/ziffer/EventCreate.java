@@ -1,5 +1,6 @@
 package de.rwth_aachen.ziffer;
 
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -98,6 +99,43 @@ public class EventCreate extends AppCompatActivity {
 
         this.setupSpinner((Spinner) findViewById(R.id.maxAttendees), categories);
         this.setupSpinner((Spinner) findViewById(R.id.minAttendees), categories);
+
+        findViewById(R.id.selectedHome).setVisibility(View.GONE);
+        findViewById(R.id.selectedEvents).setVisibility(View.GONE);
+        findViewById(R.id.selectedProfile).setVisibility(View.GONE);
+        findViewById(R.id.selectedNotifications).setVisibility(View.GONE);
+
+        findViewById(R.id.navHome).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EventCreate.this, MainActivity.class));
+            }
+        });
+
+        findViewById(R.id.navEvents).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EventCreate.this, MyJoinedEvents.class));
+            }
+        });
+
+        findViewById(R.id.navProfile).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EventCreate.this, ProfileActivity.class));
+            }
+        });
+
+        findViewById(R.id.navNotifications).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EventCreate.this, Notifications.class));
+            }
+        });
     }
 
     @Override
