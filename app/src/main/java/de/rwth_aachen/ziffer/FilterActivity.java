@@ -79,6 +79,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FilterActivity.this, MyJoinedEvents.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -87,6 +88,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FilterActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -95,6 +97,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FilterActivity.this, Notifications.class));
+                overridePendingTransition(0, 0);
             }
         });
     }

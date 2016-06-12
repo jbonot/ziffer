@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MyJoinedEvents.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Notifications.class));
+                overridePendingTransition(0, 0);
             }
         });
     }

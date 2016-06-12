@@ -110,6 +110,7 @@ public class EventCreate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(EventCreate.this, MainActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -118,6 +119,7 @@ public class EventCreate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(EventCreate.this, MyJoinedEvents.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -126,6 +128,7 @@ public class EventCreate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(EventCreate.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -134,6 +137,7 @@ public class EventCreate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(EventCreate.this, Notifications.class));
+                overridePendingTransition(0, 0);
             }
         });
     }

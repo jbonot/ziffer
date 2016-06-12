@@ -39,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -47,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, MyJoinedEvents.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -55,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -63,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, Notifications.class));
+                overridePendingTransition(0, 0);
             }
         });
     }

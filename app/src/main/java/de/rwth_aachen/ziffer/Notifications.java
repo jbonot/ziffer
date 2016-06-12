@@ -40,6 +40,7 @@ public class Notifications extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Notifications.this, MainActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -48,6 +49,7 @@ public class Notifications extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Notifications.this, MyJoinedEvents.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -56,6 +58,7 @@ public class Notifications extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Notifications.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -64,6 +67,7 @@ public class Notifications extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Notifications.this, Notifications.class));
+                overridePendingTransition(0, 0);
             }
         });
     }
