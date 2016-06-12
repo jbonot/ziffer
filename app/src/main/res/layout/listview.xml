@@ -16,5 +16,15 @@
         android:id="@+id/listView"
         android:layout_centerHorizontal="true"
         android:nestedScrollingEnabled="false"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/include5" />
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/navigation_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/include5" />
 </RelativeLayout>
