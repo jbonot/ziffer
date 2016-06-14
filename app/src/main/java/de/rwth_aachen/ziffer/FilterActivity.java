@@ -78,7 +78,7 @@ public class FilterActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FilterActivity.this, MyJoinedEvents.class));
+                startActivity(new Intent(FilterActivity.this, MyEventsActivity.class));
                 overridePendingTransition(0, 0);
             }
         });

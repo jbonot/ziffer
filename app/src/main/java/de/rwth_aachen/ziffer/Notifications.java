@@ -1,6 +1,7 @@
 package de.rwth_aachen.ziffer;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,7 @@ public class Notifications extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listview);
+        setContentView(R.layout.activity_notifications);
 
         // Add sample data to event list.
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -48,7 +49,7 @@ public class Notifications extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Notifications.this, MyJoinedEvents.class));
+                startActivity(new Intent(Notifications.this, MyEventsActivity.class));
                 overridePendingTransition(0, 0);
             }
         });

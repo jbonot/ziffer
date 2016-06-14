@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyJoinedEvents.class));
+                startActivity(new Intent(MainActivity.this, MyEventsActivity.class));
                 overridePendingTransition(0, 0);
             }
         });
@@ -136,12 +136,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_created_events) {
-            Intent intent = new Intent(this, MyCreatedEvents.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_joined_events) {
-            Intent intent = new Intent(this, MyJoinedEvents.class);
             startActivity(intent);
         }
 

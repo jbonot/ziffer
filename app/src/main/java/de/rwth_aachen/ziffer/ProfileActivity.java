@@ -25,7 +25,8 @@ public class ProfileActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new ProfileMainFragment(), "About Me");
-        viewPagerAdapter.addFragments(new ProfileEventsFragment(),"Jasim's Events");
+        viewPagerAdapter.addFragments(new ProfileEventsFragment(), "Jasim's Events");
+
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -47,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, MyJoinedEvents.class));
+                startActivity(new Intent(ProfileActivity.this, MyEventsActivity.class));
                 overridePendingTransition(0, 0);
             }
         });

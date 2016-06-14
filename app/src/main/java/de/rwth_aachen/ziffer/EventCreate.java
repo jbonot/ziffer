@@ -118,7 +118,7 @@ public class EventCreate extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EventCreate.this, MyJoinedEvents.class));
+                startActivity(new Intent(EventCreate.this, MyEventsActivity.class));
                 overridePendingTransition(0, 0);
             }
         });
