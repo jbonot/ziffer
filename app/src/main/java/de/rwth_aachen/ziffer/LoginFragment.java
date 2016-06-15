@@ -37,6 +37,9 @@ public class LoginFragment extends Fragment  {
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
     private static final String TAG = "LoginFragment";
+    private Profile profile = null;
+    String profile_name;
+    String profile_id;
 
     private FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
         @Override
@@ -46,9 +49,15 @@ public class LoginFragment extends Fragment  {
             Profile profile = Profile.getCurrentProfile();
             mTextDetails.setText(constructWelcomeMessage(profile));
 
+            profile_name= profile.getName();
+            profile_id= profile.getId();
+
+
+
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
+
 
 
         @Override
@@ -73,9 +82,18 @@ public class LoginFragment extends Fragment  {
         setupTokenTracker();
         setupProfileTracker();
 
+
+
         mTokenTracker.startTracking();
         mProfileTracker.startTracking();
+
+
     }
+
+
+
+
+
 
 
     @Override

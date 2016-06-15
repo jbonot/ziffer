@@ -3,6 +3,7 @@ package de.rwth_aachen.ziffer;
 import android.app.SearchManager;
 import android.content.Context;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListAdapter listAdapter;
+    private Profile profile = null;
+    String profile_name;
+    String profile_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,6 +55,12 @@ public class MainActivity extends AppCompatActivity
         ListView listView = (ListView) findViewById(R.id.listView);
         listAdapter = TestData.getEventListAdapter(this);
         listView.setAdapter(listAdapter);
+        profile_name= profile.getName();
+        profile_id= profile.getId();
+        String method = "profile";
+        BackgroundTask backgroundTask= new BackgroundTask(this);
+        backgroundTask.execute(method,profile_name,profile_id);
+        finish();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
