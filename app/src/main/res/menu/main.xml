@@ -10,5 +10,11 @@
 
     <!-- Filter Events -->
     <item android:id="@+id/action_filter" android:title="@string/action_filter"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:icon="@android:drawable/ic_dialog_dialer"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_settings"
+        android:title="Settings" app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_logout"
+        android:title="Log Out" app:showAsAction="ifRoom" />
 </menu>
