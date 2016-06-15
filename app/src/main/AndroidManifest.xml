@@ -61,7 +61,8 @@
         </activity>
         <activity android:name=".Notifications" >
         </activity>
-        <activity android:name=".ProfileActivity" >
+        <activity android:name=".ProfileActivity"
+            android:parentActivityName=".EventDetails" >
         </activity>
         <activity android:name=".SearchResultsActivity" >
             <intent-filter>
@@ -74,7 +75,8 @@
         </activity>
         <activity
             android:name=".FilterActivity"
-            android:label="@string/action_filter" >
+            android:label="@string/action_filter"
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity android:name=".MyEventsActivity" >
         </activity>
