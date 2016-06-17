@@ -1,103 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="de.rwth_aachen.ziffer.EventDetails">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView3"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/relativeLayout">
+
+        <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:id="@+id/header">
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        tools:context="de.rwth_aachen.ziffer.EventDetails"
+            android:background="#cce1e9">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Deutsch A1 Tutor Session"
-            android:id="@+id/eventName"
-            android:layout_gravity="center_horizontal" />
+            android:padding="16dp"
+            android:id="@+id/header">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="A1 - Beginner"
-            android:id="@+id/germanLevel"
-            android:layout_gravity="center_horizontal"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Deutsch A1 Tutor Session"
+                android:id="@+id/eventName"
+                android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:background="@android:color/white"
+                android:layout_below="@+id/header"
+                android:id="@+id/hostInfo">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/hostIcon"
+                    android:background="@drawable/background_border"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/portrait_sample" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Host: Jasim"
+                        android:id="@+id/hostName"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="German Level B1 - Intermediate"
+                        android:id="@+id/hostGermanLevel"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sunday 8PM, Bad Godesberg"
-            android:id="@+id/timeAndLocation"
-            android:layout_gravity="center_horizontal" />
+            android:padding="16dp"
+                android:layout_margin="16dp"
+                android:background="@android:color/white">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="German Level A1 - Beginner"
+                android:id="@+id/textView4"
+                android:layout_above="@+id/availability"
+                android:layout_alignRight="@+id/availability"
+                android:layout_alignEnd="@+id/availability"
+                android:layout_column="2"
+                android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Sunday, June 12 at 17:00"
+                    android:id="@+id/textView2"
+                    android:layout_above="@+id/availability"
+                    android:layout_alignRight="@+id/availability"
+                    android:layout_alignEnd="@+id/availability"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="SuperC, Aachen, Germany"
+                    android:id="@+id/textView3"
+                    android:layout_above="@+id/availability"
+                    android:layout_alignRight="@+id/availability"
+                    android:layout_alignEnd="@+id/availability"
+                    android:layout_column="1" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
+
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_below="@+id/hostInfo">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Hello! I have room to tutor 8 people at my house.  Please bring any learning materials you already have!"
+                android:id="@+id/description"
+                android:minHeight="100dp"
+                android:padding="16dp"
+                android:background="@android:color/white" />
+
+        </LinearLayout>
+
     </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:background="@drawable/background_border"
-        android:layout_below="@+id/header"
-        android:id="@+id/hostInfo">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/hostIcon"
-            android:background="@drawable/background_border"
-            android:layout_marginRight="12dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Clara"
-            android:id="@+id/hostName"
-            android:textStyle="bold"
-            android:layout_alignTop="@+id/hostIcon"
-            android:layout_toRightOf="@+id/hostIcon"
-            android:layout_toEndOf="@+id/hostIcon" />
-
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ratingBar"
-            android:layout_toRightOf="@+id/hostIcon"
-            android:numStars="5"
-            android:rating="4"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_below="@+id/hostName"
-            android:layout_marginTop="6dp" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_below="@+id/hostInfo">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Hello! I have room to tutor 8 people at my house.  Please bring any learning materials you already have!"
-            android:id="@+id/description" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:background="#a3d0e1"
+        android:id="@+id/relativeLayout"
+        android:layout_above="@+id/include3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,14 +177,26 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="2 of 8 available spots left"
             android:id="@+id/availability"
-            android:layout_gravity="center_horizontal" />
+            android:layout_marginTop="10dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Join Event"
-            android:id="@+id/button3" />
+            android:id="@+id/button3"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/navigation_bar"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/include3" />
 </RelativeLayout>

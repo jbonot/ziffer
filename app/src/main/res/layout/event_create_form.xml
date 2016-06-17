@@ -1,41 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@android:color/white">
-
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/button"
-            android:layout_weight="1"
-            android:background="@android:color/white" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create"
-            android:id="@+id/button2"
-            android:layout_weight="1"
-            android:background="@android:color/white" />
-
-
-    </LinearLayout>
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@color/white"  />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView" >
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
+        android:layout_above="@+id/include2"
+        android:layout_below="@+id/toolbar">
 
         <LinearLayout
             android:orientation="vertical"
@@ -49,12 +29,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:padding="10dp">
+                android:layout_marginTop="12dp"
+                android:padding="16dp">
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinnerEventType" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginTop="16dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -76,7 +66,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/white"
                 android:padding="10dp">
 
@@ -84,33 +74,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_marginTop="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Flexible Time"
-                        android:id="@+id/textView4"
-                        android:gravity="left"
-                        android:layout_weight="1" />
-
-                    <Switch
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/switchFlexibleT"
-                        android:gravity="right"
-                        android:layout_weight="1"  />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_marginTop="12dp">
+                    android:gravity="center_vertical|center_horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -121,13 +85,29 @@
                         android:gravity="left"
                         android:layout_weight="1"  />
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="May 23     13:00"
-                        android:id="@+id/textView2"
-                        android:clickable="false" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="May 23"
+                            android:id="@+id/dateStart"
+                            android:clickable="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="13:00"
+                            android:id="@+id/timeStart"
+                            android:clickable="false"
+                            android:layout_marginLeft="48dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -152,10 +132,36 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="14:00"
-                        android:id="@+id/textView3"
+                        android:id="@+id/timeEnd"
                         android:clickable="false"
                         android:autoText="false" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Duration"
+                        android:id="@+id/textView8"
+                        android:gravity="left"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="1 hour"
+                        android:id="@+id/duration"
+                        android:clickable="false"
+                        android:autoText="false" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -164,7 +170,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/white">
 
                 <LinearLayout
@@ -178,17 +184,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Max Attendees"
-                        android:id="@+id/textView"
+                        android:text="Min Attendees"
+                        android:id="@+id/textView7"
                         android:gravity="left"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"  />
 
                     <Spinner
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinnerMaxAttendees"
+                        android:id="@+id/minAttendees"
                         android:gravity="right"
                         android:textAlignment="center" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -202,33 +209,43 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="RSVP Deadline"
-                        android:id="@+id/textView7"
+                        android:text="Max Attendees"
+                        android:id="@+id/textView"
                         android:gravity="left"
-                        android:layout_weight="1"  />
+                        android:layout_weight="1" />
 
                     <Spinner
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinnerRsvpDeadline"
+                        android:id="@+id/maxAttendees"
                         android:gravity="right"
                         android:textAlignment="center" />
-
                 </LinearLayout>
+
             </LinearLayout>
 
 
             <EditText
                 android:layout_width="fill_parent"
-                android:layout_height="110dp"
+                android:layout_height="130dp"
                 android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/editText3"
+                android:id="@+id/description"
                 android:hint="Description"
                 android:gravity="top"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
                 android:background="@android:color/white" />
+
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/navigation_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/include2" />
+
+</RelativeLayout>
