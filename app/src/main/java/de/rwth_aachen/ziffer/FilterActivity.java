@@ -63,46 +63,6 @@ public class FilterActivity extends AppCompatActivity {
         });
 
         this.restoreDefaultValues();
-
-        findViewById(R.id.selectedHome).setVisibility(View.VISIBLE);
-        findViewById(R.id.selectedEvents).setVisibility(View.GONE);
-        findViewById(R.id.selectedProfile).setVisibility(View.GONE);
-        findViewById(R.id.selectedNotifications).setVisibility(View.GONE);
-
-        findViewById(R.id.navHome).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        findViewById(R.id.navEvents).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FilterActivity.this, MyEventsActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navProfile).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FilterActivity.this, ProfileActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navNotifications).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FilterActivity.this, Notifications.class));
-                overridePendingTransition(0, 0);
-            }
-        });
     }
 
     public void restoreDefaultValues() {

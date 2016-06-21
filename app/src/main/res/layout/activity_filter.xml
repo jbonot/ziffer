@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView2"
-        android:layout_above="@+id/include6"
         android:layout_below="@+id/toolbar">
 
         <LinearLayout
@@ -184,14 +183,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        layout="@layout/navigation_bar"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/include6" />
 </RelativeLayout>

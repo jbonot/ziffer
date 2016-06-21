@@ -57,9 +57,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventDetails" >
-        </activity>
-        <activity android:name=".Notifications" >
+        <activity android:name=".EventDetails"
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity android:name=".ProfileActivity"
             android:parentActivityName=".EventDetails" >
@@ -77,8 +76,6 @@
             android:name=".FilterActivity"
             android:label="@string/action_filter"
             android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity android:name=".MyEventsActivity" >
         </activity>
     </application>
 
