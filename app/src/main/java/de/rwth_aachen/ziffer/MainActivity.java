@@ -5,14 +5,13 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SearchView;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,49 +25,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Add sample data to event list.
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listAdapter = TestData.getEventListAdapter(this);
-        listView.setAdapter(listAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, EventDetails.class);
-                startActivity(intent);
-            }
-        });
-
-        findViewById(R.id.selectedHome).setVisibility(View.VISIBLE);
-        findViewById(R.id.selectedEvents).setVisibility(View.GONE);
-        findViewById(R.id.selectedProfile).setVisibility(View.GONE);
-        findViewById(R.id.selectedNotifications).setVisibility(View.GONE);
-
-        findViewById(R.id.navEvents).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyEventsActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navProfile).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navNotifications).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Notifications.class));
-                overridePendingTransition(0, 0);
-            }
-        });
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragments(new LocalEventsFragment(), "Nearby Events");
+        viewPagerAdapter.addFragments(new JoinedEventsFragment(), "Joined Events");
+        viewPagerAdapter.addFragments(new ProfileFragment(), "Profile");
+        viewPagerAdapter.addFragments(new NotificationsFragment(), "Notifications");
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setAdapter(viewPagerAdapter);
+        ((IconTextTabLayout) findViewById(R.id.tabLayout)).setupWithViewPager(viewPager);
     }
 
     @Override

@@ -99,47 +99,6 @@ public class EventCreate extends AppCompatActivity {
 
         this.setupSpinner((Spinner) findViewById(R.id.maxAttendees), categories);
         this.setupSpinner((Spinner) findViewById(R.id.minAttendees), categories);
-
-        findViewById(R.id.selectedHome).setVisibility(View.GONE);
-        findViewById(R.id.selectedEvents).setVisibility(View.GONE);
-        findViewById(R.id.selectedProfile).setVisibility(View.GONE);
-        findViewById(R.id.selectedNotifications).setVisibility(View.GONE);
-
-        findViewById(R.id.navHome).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EventCreate.this, MainActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navEvents).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EventCreate.this, MyEventsActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navProfile).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EventCreate.this, ProfileActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        findViewById(R.id.navNotifications).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EventCreate.this, Notifications.class));
-                overridePendingTransition(0, 0);
-            }
-        });
     }
 
     @Override

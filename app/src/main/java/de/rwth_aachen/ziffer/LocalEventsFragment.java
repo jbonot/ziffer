@@ -15,14 +15,14 @@ import android.widget.ListView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileEventsFragment extends Fragment {
+public class LocalEventsFragment extends Fragment {
 
     private ListAdapter listAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.listview, container, false);
+        return inflater.inflate(R.layout.home_fragment, container, false);
     }
 
     @Override
@@ -31,12 +31,19 @@ public class ProfileEventsFragment extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.listView);
         listAdapter = TestData.getEventListAdapter(getActivity());
         listView.setAdapter(listAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), EventDetails.class);
                 startActivity(intent);
+            }
+        });
+
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), EventCreate.class));
             }
         });
     }
