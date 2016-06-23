@@ -4,12 +4,15 @@ package de.rwth_aachen.ziffer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 
 /**
@@ -18,10 +21,15 @@ import android.widget.ListView;
 public class LocalEventsFragment extends Fragment {
 
     private ListAdapter listAdapter;
+    private SupportMapFragment supportMapFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.supportMapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.map, this.supportMapFragment);
+        fragmentTransaction.commit();
         return inflater.inflate(R.layout.home_fragment, container, false);
     }
 
