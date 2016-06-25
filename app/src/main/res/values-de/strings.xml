@@ -1,0 +1,6 @@
+<resources>
+    <string name="nearby_events">In der Nähe</string>
+    <string name="joined_events">Teilgenommen</string>
+    <string name="profile">Profil</string>
+    <string name="notifications">Nachrichten</string>
+</resources>

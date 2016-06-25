@@ -13,8 +13,10 @@
         android:icon="@android:drawable/ic_dialog_dialer"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_settings"
-        android:title="Settings" app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_set_en"
+        android:title="English" app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_set_de"
+        android:title="Deutsch" app:showAsAction="ifRoom" />
     <item android:id="@+id/action_logout"
         android:title="Log Out" app:showAsAction="ifRoom" />
 </menu>

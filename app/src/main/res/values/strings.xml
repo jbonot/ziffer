@@ -6,5 +6,8 @@
     <string name="action_notifications">Notifications</string>
     <string name="action_filter">Filter Events</string>
     <string name="facebook_app_id">864050240388656</string>
-
+    <string name="nearby_events">Nearby Events</string>
+    <string name="joined_events">Joined Events</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
 </resources>
