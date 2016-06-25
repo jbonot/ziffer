@@ -3,4 +3,22 @@
     <string name="joined_events">Teilgenommen</string>
     <string name="profile">Profil</string>
     <string name="notifications">Nachrichten</string>
+    <string name="german_level">Sprachniveau</string>
+    <string name="title">Titel</string>
+    <string name="location">Ort</string>
+    <string name="start">Beginn</string>
+    <string name="end">Ende</string>
+    <string name="duration">Dauer</string>
+    <string name="duration_1hr">1 Stunde</string>
+    <string name="duration_hours">%d Stunden</string>
+    <string name="duration_1min">1 Minute</string>
+    <string name="duration_minutes">%d Minuten</string>
+    <string name="min_attendees">Min Gäste</string>
+    <string name="max_attendees">Max Gäste</string>
+    <string name="description">Beschreibung</string>
+    <string name="a1_beginner">A1 - Einstieg</string>
+    <string name="a2_elementary">A2 - Grundlagen</string>
+    <string name="b1_intermediate">B1 - Mittelstufe</string>
+    <string name="b2_upper_intermediate">B2 - Gute Mittelstufe</string>
+    <string name="c1_advanced">C1 - Fortgeschrittene Kenntnisse</string>
 </resources>
