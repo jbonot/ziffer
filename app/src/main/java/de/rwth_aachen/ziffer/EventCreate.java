@@ -67,7 +67,7 @@ public class EventCreate extends AppCompatActivity {
             }
         });
 
-        ((TextView)findViewById(R.id.duration)).setText("1 hour");
+        ((TextView)findViewById(R.id.duration)).setText(getResources().getString(R.string.duration_1hr));
 
         TextView dateStart = (TextView)findViewById(R.id.dateStart);
         dateStart.setText(DatePickerFragment.MONTHS[c.get(Calendar.MONTH)] + " " + c.get(Calendar.DAY_OF_MONTH));
@@ -85,12 +85,12 @@ public class EventCreate extends AppCompatActivity {
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add("German Level");
-        categories.add("A1 - Beginner");
-        categories.add("A2 - Elementary");
-        categories.add("B1 - Intermediate");
-        categories.add("B2 - Upper Intermediate");
-        categories.add("C1 - Advanced");
+        categories.add(getResources().getString(R.string.german_level));
+        categories.add(getResources().getString(R.string.a1_beginner));
+        categories.add(getResources().getString(R.string.a2_elementary));
+        categories.add(getResources().getString(R.string.b1_intermediate));
+        categories.add(getResources().getString(R.string.b2_upper_intermediate));
+        categories.add(getResources().getString(R.string.c1_advanced));
 
         this.setupSpinner((Spinner) findViewById(R.id.spinnerEventType), categories);
 

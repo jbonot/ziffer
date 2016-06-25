@@ -10,4 +10,22 @@
     <string name="joined_events">Joined Events</string>
     <string name="profile">Profile</string>
     <string name="notifications">Notifications</string>
+    <string name="german_level">German Level</string>
+    <string name="title">Title</string>
+    <string name="location">Location</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="duration">Duration</string>
+    <string name="duration_1hr">1 hour</string>
+    <string name="duration_hours">%d hours</string>
+    <string name="duration_1min">1 minute</string>
+    <string name="duration_minutes">%d minutes</string>
+    <string name="min_attendees">Min Attendees</string>
+    <string name="max_attendees">Max Attendees</string>
+    <string name="description">Description</string>
+    <string name="a1_beginner">A1 - Beginner</string>
+    <string name="a2_elementary">A2 - Elementary</string>
+    <string name="b1_intermediate">B1 - Intermediate</string>
+    <string name="b2_upper_intermediate">B2 - Upper Intermediate</string>
+    <string name="c1_advanced">C1 - Advanced</string>
 </resources>
