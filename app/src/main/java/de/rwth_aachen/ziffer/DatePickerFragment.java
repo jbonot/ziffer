@@ -7,12 +7,11 @@ import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener  {
-    static String[] MONTHS = new String[]{ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-                                           "Sept", "Oct", "Nov", "Dec"};
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -35,7 +34,13 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
         ((TextView)getActivity().findViewById(getArguments().getInt("id")))
-                .setText(MONTHS[month - 1] + " " + day);
+                .setText(new SimpleDateFormat(
+                        getResources().getConfiguration().locale.getLanguage().equals("de")
+                                ? "E, d. MMMM" : "EEE, MMMM d").format(c.getTime()));
     }
 }

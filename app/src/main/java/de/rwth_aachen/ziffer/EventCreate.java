@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,7 +71,9 @@ public class EventCreate extends AppCompatActivity {
         ((TextView)findViewById(R.id.duration)).setText(getResources().getString(R.string.duration_1hr));
 
         TextView dateStart = (TextView)findViewById(R.id.dateStart);
-        dateStart.setText(DatePickerFragment.MONTHS[c.get(Calendar.MONTH)] + " " + c.get(Calendar.DAY_OF_MONTH));
+        dateStart.setText(new SimpleDateFormat(
+                getResources().getConfiguration().locale.getLanguage().equals("de")
+                        ? "E, d. MMMM" : "EEE, MMMM d").format(c.getTime()));
         dateStart.setOnClickListener(new View.OnClickListener() {
 
             @Override
