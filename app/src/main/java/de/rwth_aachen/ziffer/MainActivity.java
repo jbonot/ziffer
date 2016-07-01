@@ -106,6 +106,9 @@ public class MainActivity extends AppCompatActivity  {
                     getBaseContext().getResources().getDisplayMetrics());
             recreate();
             return true;
+        } else if (id == R.id.action_logout) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
