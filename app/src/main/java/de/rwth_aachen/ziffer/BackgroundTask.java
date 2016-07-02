@@ -35,8 +35,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         // LocalSettings class is ignored from the repository.  Must be created locally.
-        String reg_url = LocalSettings.BASE_URL_INSERT + "register.php";
-        String login_url = LocalSettings.BASE_URL_SELECT + "login.php";
+        String reg_url = LocalSettings.BASE_URL + "register.php";
+        String login_url = LocalSettings.BASE_URL + "login.php";
         String method = params[0];
         if (method.equals("event")) {
             String user_name_host = params[1];
