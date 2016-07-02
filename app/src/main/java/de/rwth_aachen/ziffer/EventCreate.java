@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -124,8 +125,35 @@ public class EventCreate extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Spinner spinnerEventType = (Spinner) findViewById(R.id.spinnerEventType);
+        EditText editText = (EditText) findViewById(R.id.editText);
+        EditText editText2 = (EditText) findViewById(R.id.editText2);
+        TextView dateStart = (TextView) findViewById(R.id.dateStart);
+        TextView timeStart = (TextView) findViewById(R.id.timeStart);
+        TextView timeEnd = (TextView) findViewById(R.id.timeEnd);
+        Spinner minAttendees = (Spinner) findViewById(R.id.minAttendees);
+        Spinner maxAttendees = (Spinner) findViewById(R.id.maxAttendees);
+        EditText description = (EditText) findViewById(R.id.description);
 
         if (id == R.id.action_save) {
+           Log.d("zifferspinner",String.valueOf(spinnerEventType.getSelectedItem()));
+            String method = "event";
+            String user_name_host,sEventType, eText,eText2, dStart, tStart, tEnd, miAttendees, maAttendees, descr;
+            user_name_host= "jasimwhd";
+            sEventType = String.valueOf(spinnerEventType.getSelectedItem());
+            eText = editText.getText().toString();
+            eText2 = editText2.getText().toString();
+            dStart = dateStart.getText().toString();
+            tStart = timeStart.getText().toString();
+            tEnd = timeEnd.getText().toString();
+            miAttendees = String.valueOf(minAttendees.getSelectedItem());
+            maAttendees = String.valueOf(maxAttendees.getSelectedItem());
+            descr = description.getText().toString();
+
+
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            backgroundTask.execute(method,user_name_host,sEventType,eText, eText2,dStart,tStart,tEnd,miAttendees,maAttendees,descr);
+            finish();
             return true;
         } else if (id == R.id.action_cancel) {
             return true;
