@@ -1,10 +1,11 @@
 package de.rwth_aachen.ziffer;
 
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +15,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -83,11 +85,83 @@ public class EditProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_save) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            attemptSave();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void attemptSave() {
+
+        // Reset errors.
+        EditText firstNameView = (EditText) findViewById(R.id.first_name);
+        EditText lastNameView = (EditText) findViewById(R.id.last_name);
+        EditText dobView = (EditText) findViewById(R.id.date_of_birth);
+        Spinner germanLevelSpinner = (Spinner) findViewById(R.id.german_level);
+
+        firstNameView.setError(null);
+        lastNameView.setError(null);
+        dobView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String firstName = firstNameView.getText().toString();
+        String lastName = lastNameView.getText().toString();
+        String dob = dobView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        if (germanLevelSpinner.getSelectedItemPosition() == 0) {
+            TextView germanLevel = (TextView) germanLevelSpinner.getSelectedView();
+            germanLevel.setError(getString(R.string.error_unselected_german_level));
+            focusView = germanLevel;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(dob)) {
+            dobView.setError(getString(R.string.error_field_required));
+            focusView = dobView;
+            cancel = true;
+        } else if (!isDateOfBirthValid(dob)) {
+            dobView.setError(getString(R.string.error_invalid_date_of_birth));
+            focusView = dobView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(lastName)) {
+            lastNameView.setError(getString(R.string.error_field_required));
+            focusView = lastNameView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(firstName)) {
+            firstNameView.setError(getString(R.string.error_field_required));
+            focusView = firstNameView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // TODO: Store user information and forward to the home page.
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+    }
+
+    private boolean isDateOfBirthValid(String dob){
+        SimpleDateFormat dobFormat = new SimpleDateFormat(getResources().getConfiguration().locale.getLanguage().equals("de")
+                ? "d. MMMM, yyyy" : "MMMM d, yyyy");
+        try {
+            dobFormat.parse(dob);
+            return true;
+        } catch (ParseException e) {
+            Log.e("ZIFFER", e.getMessage(), e);
+        }
+
+        return false;
     }
 }
