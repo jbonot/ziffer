@@ -35,7 +35,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         // LocalSettings class is ignored from the repository.  Must be created locally.
-        String user_reg = LocalSettings.Base_URL + "user_registration.php";
+        String user_reg = "http://192.168.0.19:8000/webapp/user_registration.php";
         String reg_url = LocalSettings.Base_URL + "register.php";
         String login_url = LocalSettings.Base_URL + "login.php";
         String method = params[0];
@@ -127,10 +127,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             }
             catch (MalformedURLException e) {
                 e.printStackTrace();
+                Log.d("Catchexception",e.toString());
 
 
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("Catchexception",e.toString());
 
             }
         }
