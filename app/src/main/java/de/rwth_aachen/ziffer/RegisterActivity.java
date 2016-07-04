@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -144,8 +145,12 @@ public class RegisterActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(username, password);
-            mAuthTask.execute((Void) null);
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            backgroundTask.execute("register",username,password);
+            Log.d("registration",username);
+            RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            //    mAuthTask = new UserLoginTask(username, password);
+            //    mAuthTask.execute((Void) null);
         }
     }
 

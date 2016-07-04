@@ -35,9 +35,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         // LocalSettings class is ignored from the repository.  Must be created locally.
-        String reg_url = LocalSettings.BASE_URL + "register.php";
-        String login_url = LocalSettings.BASE_URL + "login.php";
+        String user_reg = LocalSettings.Base_URL + "user_registration.php";
+
+        String reg_url = LocalSettings.Base_URL+ "register.php";
+        String login_url = LocalSettings.Base_URL + "login.php";
         String method = params[0];
+        Log.d("filecheck",user_reg);
         if (method.equals("event")) {
             String user_name_host = params[1];
             String german_level_event = params[2];
@@ -80,13 +83,58 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 IS.close();
                 //httpURLConnection.connect();
                 httpURLConnection.disconnect();
-                return "Registration";
+                return "Event Registered Successfully";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        else if (method.equals("register"))
+        {
+            String user_name = params[1];
+            String user_pass = params[2];
+
+            Log.d("param",user_pass);
+            try
+            {
+                URL url = new URL(user_reg);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                //httpURLConnection.setDoInput(true);
+                OutputStream OS = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+                String data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" +
+                        URLEncoder.encode("user_pass", "UTF-8") + "=" + URLEncoder.encode(user_pass, "UTF-8");
+                Log.d("Ziffer",data);
+                bufferedWriter.write(data);
+
+
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
+                InputStream IS = httpURLConnection.getInputStream();
+                IS.close();
+                //httpURLConnection.connect();
+                httpURLConnection.disconnect();
+                return "User registered successfully";
+            }
+            catch (MalformedURLException e) {
+                e.printStackTrace();
+                Log.d("Catchexception1",e.toString());
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("Catchexception2",e.toString());
+
+            }
+        }
+
+
         else if(method.equals("login"))
         {
             String login_name = params[1];
@@ -134,7 +182,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     }
     @Override
     protected void onPostExecute(String result) {
-        if(result.equals("Registration"))
+        if(result.equals("Event Registered Successfully"))
+        {
+            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+        }
+        else if(result.equals("User registered successfully"))
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
