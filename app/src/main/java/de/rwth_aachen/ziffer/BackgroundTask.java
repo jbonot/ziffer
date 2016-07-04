@@ -36,7 +36,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         // LocalSettings class is ignored from the repository.  Must be created locally.
         String user_reg = LocalSettings.Base_URL + "user_registration.php";
-
+        String profile_data = LocalSettings.Base_URL + "profile_data.php";
         String reg_url = LocalSettings.Base_URL+ "register.php";
         String login_url = LocalSettings.Base_URL + "login.php";
         String method = params[0];
@@ -134,6 +134,58 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             }
         }
 
+        else if (method.equals("profile_data"))
+        {
+            String user_name = params[1];
+            String firstName = params[2];
+            String lastName = params[3];
+            String dob = params[4];
+            String german_level = params[5];
+            String description = params[6];
+
+            Log.d("param",user_name);
+            try
+            {
+                URL url = new URL(profile_data);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                //httpURLConnection.setDoInput(true);
+                OutputStream OS = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+                String data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" +
+                        URLEncoder.encode("firstName", "UTF-8") + "=" + URLEncoder.encode(firstName, "UTF-8") + "&" +
+                        URLEncoder.encode("lastName", "UTF-8") + "=" + URLEncoder.encode(lastName, "UTF-8") + "&" +
+                        URLEncoder.encode("dob", "UTF-8") + "=" + URLEncoder.encode(dob, "UTF-8") + "&" +
+                        URLEncoder.encode("german_level", "UTF-8") + "=" + URLEncoder.encode(german_level, "UTF-8") + "&" +
+                        URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8");
+
+                Log.d("Ziffer",data);
+                bufferedWriter.write(data);
+
+
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
+                InputStream IS = httpURLConnection.getInputStream();
+                IS.close();
+                //httpURLConnection.connect();
+                httpURLConnection.disconnect();
+                return "Profile is created!";
+            }
+            catch (MalformedURLException e) {
+                e.printStackTrace();
+                Log.d("Catchexception1",e.toString());
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("Catchexception2",e.toString());
+
+            }
+        }
+
 
         else if(method.equals("login"))
         {
@@ -190,6 +242,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
+        else if(result.equals("Profile is created!"))
+        {
+            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+        }
+
         else
         {
             alertDialog.setMessage(result);

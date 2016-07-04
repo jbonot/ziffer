@@ -148,7 +148,15 @@ public class RegisterActivity extends AppCompatActivity {
             BackgroundTask backgroundTask = new BackgroundTask(this);
             backgroundTask.execute("register",username,password);
             Log.d("registration",username);
-            RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+            //code for passing the value username to edit profile activity
+            Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
+
+            i.putExtra("userkey",username);
+            startActivity(i);
+
+           // RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, EditProfileActivity.class));
+
             //    mAuthTask = new UserLoginTask(username, password);
             //    mAuthTask.execute((Void) null);
         }

@@ -30,6 +30,10 @@ public class EditProfileActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get the user data from user name (RegisterActivity)
+
+
+
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add(getResources().getString(R.string.german_level));
@@ -99,6 +103,7 @@ public class EditProfileActivity extends AppCompatActivity {
         EditText lastNameView = (EditText) findViewById(R.id.last_name);
         EditText dobView = (EditText) findViewById(R.id.date_of_birth);
         Spinner germanLevelSpinner = (Spinner) findViewById(R.id.german_level);
+        EditText description = (EditText) findViewById(R.id.description);
 
         firstNameView.setError(null);
         lastNameView.setError(null);
@@ -108,7 +113,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String firstName = firstNameView.getText().toString();
         String lastName = lastNameView.getText().toString();
         String dob = dobView.getText().toString();
-
+        String descr =description.getText().toString();
         boolean cancel = false;
         View focusView = null;
 
@@ -147,6 +152,14 @@ public class EditProfileActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // TODO: Store user information and forward to the home page.
+            Intent intent = getIntent();
+
+            String user_name = intent.getStringExtra("userkey");
+            Log.d("uservaluenew",user_name);
+
+            String gLevelSpinner = String.valueOf(germanLevelSpinner.getSelectedItem());
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            backgroundTask.execute("profile_data",user_name,firstName,lastName,dob,gLevelSpinner,descr);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
