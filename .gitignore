@@ -33,3 +33,6 @@ captures/
 
 .idea
 .DS_Store
+
+# Ignore local settings, which differs from computer to computer
+LocalSettings.java

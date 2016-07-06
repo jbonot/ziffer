@@ -8,6 +8,7 @@ import android.text.format.DateFormat;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment
@@ -27,7 +28,12 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        ((TextView)getActivity().findViewById(getArguments().getInt("id")))
-                .setText(String.format("%d:%02d", hourOfDay, minute));
+        // Set the time, using the time format that corresponds with the phone settings
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        c.set(Calendar.MINUTE, minute);
+        ((TextView) getActivity().findViewById(getArguments().getInt("id"))).setText(
+                new SimpleDateFormat(DateFormat.is24HourFormat(getActivity()) ? "H:mm" : "h:mm a")
+                        .format(c.getTime()));
     }
 }
