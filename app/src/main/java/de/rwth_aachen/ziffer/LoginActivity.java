@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -132,8 +133,13 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(username, password);
-            mAuthTask.execute((Void) null);
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            backgroundTask.execute("login",username,password);
+            finish();
+            Log.d("registration",username);
+
+            //mAuthTask = new UserLoginTask(username, password);
+            //mAuthTask.execute((Void) null);
         }
     }
 
@@ -227,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
