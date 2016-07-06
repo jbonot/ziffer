@@ -142,6 +142,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             String dob = params[4];
             String german_level = params[5];
             String description = params[6];
+            String photo = params[7];
 
             Log.d("param",user_name);
             try
@@ -159,7 +160,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                         URLEncoder.encode("lastName", "UTF-8") + "=" + URLEncoder.encode(lastName, "UTF-8") + "&" +
                         URLEncoder.encode("dob", "UTF-8") + "=" + URLEncoder.encode(dob, "UTF-8") + "&" +
                         URLEncoder.encode("german_level", "UTF-8") + "=" + URLEncoder.encode(german_level, "UTF-8") + "&" +
-                        URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8");
+                        URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&" +
+                        URLEncoder.encode("photo", "UTF-8") + "=" + URLEncoder.encode(photo, "UTF-8");
 
                 Log.d("Ziffer",data);
                 bufferedWriter.write(data);

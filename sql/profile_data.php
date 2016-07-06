@@ -19,9 +19,10 @@ $lastName = $_POST["lastName"];
 $dob = $_POST["dob"];  
 $german_level = $_POST["german_level"];  
 $description = $_POST["description"];  
+$photo = $_POST["photo"];
 
 
-$sql = "insert into profile_data values(DEFAULT,'$user_name','$firstName','$lastName','$dob','$german_level','$description');";
+$sql = "insert into profile_data values(DEFAULT,'$user_name','$firstName','$lastName','$dob','$german_level','$description','$photo');";
  
 
 if (mysqli_query($con, $sql)) {
