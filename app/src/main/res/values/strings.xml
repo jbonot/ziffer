@@ -56,6 +56,7 @@
     <string name="description_optional">Description (optional)</string>
     <string name="error_invalid_date_of_birth">Date of birth is invalid</string>
     <string name="error_unselected_german_level">Select your current German level</string>
+    <string name="select_photo">Select photo</string>
 
 
 </resources>
