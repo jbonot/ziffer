@@ -2,13 +2,16 @@ package de.rwth_aachen.ziffer;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMG = 1;
+    private boolean hasNewPhoto = false;
     String imgDecodableString;
 
     @Override
@@ -37,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        this.hasNewPhoto = false;
         //get the user data from user name (RegisterActivity)
 
 
@@ -138,6 +142,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 imgView.setImageBitmap(BitmapFactory
                         .decodeFile(imgDecodableString));
 
+                this.hasNewPhoto = true;
+
             } else {
                 // User cancelled.  Do nothing.
             }
@@ -210,8 +216,17 @@ public class EditProfileActivity extends AppCompatActivity {
             Log.d("uservaluenew",user_name);
 
             String gLevelSpinner = String.valueOf(germanLevelSpinner.getSelectedItem());
+
+            String image_str = "";
+            if (this.hasNewPhoto) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                ((BitmapDrawable)(((ImageView)findViewById(R.id.imageView)).getDrawable()))
+                        .getBitmap().compress(Bitmap.CompressFormat.PNG, 90, stream);
+                image_str = Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
+            }
+
             BackgroundTask backgroundTask = new BackgroundTask(this);
-            backgroundTask.execute("profile_data",user_name,firstName,lastName,dob,gLevelSpinner,descr);
+            backgroundTask.execute("profile_data",user_name,firstName,lastName,dob,gLevelSpinner,descr,image_str);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
