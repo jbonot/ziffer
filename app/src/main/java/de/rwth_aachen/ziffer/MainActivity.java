@@ -45,14 +45,18 @@ import java.util.Locale;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
-
+    String user_name = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            user_name = extras.getString("user_name");
+            //The key argument here must match that used in the other activity
+        }
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new LocalEventsFragment(), getResources().getString(R.string.nearby_events));

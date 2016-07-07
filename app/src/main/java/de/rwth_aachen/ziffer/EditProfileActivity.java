@@ -227,7 +227,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
             BackgroundTask backgroundTask = new BackgroundTask(this);
             backgroundTask.execute("profile_data",user_name,firstName,lastName,dob,gLevelSpinner,descr,image_str);
-            startActivity(new Intent(this, MainActivity.class));
+
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
+            i.putExtra("userkey",user_name);
+            startActivity(i);
             finish();
         }
     }

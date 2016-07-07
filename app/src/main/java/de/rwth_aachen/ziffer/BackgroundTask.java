@@ -5,9 +5,14 @@ package de.rwth_aachen.ziffer;
  */
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -39,6 +44,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         String profile_data = LocalSettings.Base_URL + "profile_data.php";
         String reg_url = LocalSettings.Base_URL+ "register.php";
         String login_url = LocalSettings.Base_URL + "login.php";
+
         String method = params[0];
         Log.d("filecheck",user_reg);
         if (method.equals("event")) {
@@ -191,41 +197,40 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
         else if(method.equals("login"))
         {
-            String login_name = params[1];
-            String login_pass = params[2];
-            Log.d("logindata",login_name);
-            Log.d("logindata",login_pass);
+            int tmp;
+            String user_name = params[1];
+            String user_pass = params[2];
+            Log.d("logindata",user_name);
+            Log.d("logindata",user_pass);
+            String data="";
             try {
                 URL url = new URL(login_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
+                String urlParams = "user_name="+user_name+"&user_pass="+user_pass;
+                Log.d("urlParams",urlParams);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String data = URLEncoder.encode("login_name","UTF-8")+"="+URLEncoder.encode(login_name,"UTF-8")+"&"+
-                        URLEncoder.encode("login_pass","UTF-8")+"="+URLEncoder.encode(login_pass,"UTF-8");
-                bufferedWriter.write(data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                String response = "";
-                String line = "";
-                while ((line = bufferedReader.readLine())!=null)
-                {
-                    response+= line;
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp=is.read())!=-1){
+                    data+= (char)tmp;
                 }
-                bufferedReader.close();
-                inputStream.close();
+
+                is.close();
                 httpURLConnection.disconnect();
-                Log.d("ResponseDB",response);
-                return response;
+                Log.d("SelectData",data);
+                if(data.indexOf("user_info_id") >=0)
+                return data;
+                else
+                return "Please Enter correct credentials!!!";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("CatchingLogging",e.getMessage());
             }
         }
         return null;
@@ -236,6 +241,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     }
     @Override
     protected void onPostExecute(String result) {
+
+        String firstName ="",lastName="",user_name="";
         if(result.equals("Event Registered Successfully"))
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
@@ -248,7 +255,32 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
+        else if(result.indexOf("user_data") >=0)
+        {
+            try
+            {
+                JSONObject root = new JSONObject(result);
+                JSONObject user_data = root.getJSONObject("user_data");
+              //   firstName = user_data.getString("profile_data.firstName");
+               // lastName = user_data.getString("profile_data.lastName");
+                 user_name = user_data.getString("user_name");
+                Log.d("jsoncheck",user_name);
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
 
+            Intent i = new Intent(ctx,MainActivity.class);
+            i.putExtra("user_name",user_name);
+            ctx.startActivity(i);
+            Toast.makeText(ctx, "Welcome " + user_name , Toast.LENGTH_LONG).show();
+
+        }
+        else if(result.equals("Please Enter correct credentials!!!"))
+        {
+            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+        }
         else
         {
             alertDialog.setMessage(result);
