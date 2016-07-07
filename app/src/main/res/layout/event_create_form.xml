@@ -73,6 +73,32 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/start"
+                        android:id="@+id/textView11"
+                        android:gravity="left"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="May 23"
+                        android:id="@+id/dateStart"
+                        android:clickable="false" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal">
 
                     <TextView
@@ -84,29 +110,14 @@
                         android:gravity="left"
                         android:layout_weight="1"  />
 
-                    <LinearLayout
-                        android:orientation="horizontal"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="May 23"
-                            android:id="@+id/dateStart"
-                            android:clickable="false" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="13:00"
-                            android:id="@+id/timeStart"
-                            android:clickable="false"
-                            android:layout_marginLeft="48dp" />
-
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="13:00"
+                        android:id="@+id/timeStart"
+                        android:clickable="false"
+                        android:layout_marginLeft="48dp" />
 
                 </LinearLayout>
 
