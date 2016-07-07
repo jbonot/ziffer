@@ -118,7 +118,7 @@ public class EventCreate extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.savecancel, menu);
+        getMenuInflater().inflate(R.menu.save, menu);
         return true;
     }
 
@@ -154,8 +154,6 @@ public class EventCreate extends AppCompatActivity {
             BackgroundTask backgroundTask = new BackgroundTask(this);
             backgroundTask.execute(method,user_name_host,sEventType,eText, eText2,dStart,tStart,tEnd,miAttendees,maAttendees,descr);
             finish();
-            return true;
-        } else if (id == R.id.action_cancel) {
             return true;
         }
 

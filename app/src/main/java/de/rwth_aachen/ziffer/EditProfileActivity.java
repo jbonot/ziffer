@@ -93,7 +93,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.savecancel, menu);
+        getMenuInflater().inflate(R.menu.save, menu);
         return true;
     }
 
