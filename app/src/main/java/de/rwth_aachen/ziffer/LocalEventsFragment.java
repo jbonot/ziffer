@@ -166,6 +166,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         try {
             address = coder.getFromLocationName(strAddress, 5);
             if (address == null) {
+                Log.d("ZIFFER", "address is null");
                 return null;
             }
             Address location = address.get(0);
@@ -175,10 +176,13 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             p1 = new LatLng(location.getLatitude(), location.getLongitude() );
 
         } catch (Exception ex) {
-
+            Log.e("ZIFFER", ex.getMessage(), ex);
             ex.printStackTrace();
         }
 
+        if (p1 == null) {
+            Log.d("ZIFFER", "returning null");
+        }
         return p1;
     }
 
@@ -187,10 +191,16 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(getActivity(), "Super C Aachen") , 9.0f) );
+        LatLng location = getLocationFromAddress(getActivity(), "Super C Aachen");
+        if (location != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 9.0f));
 
-        Marker TP = googleMap.addMarker(new MarkerOptions().position(getLocationFromAddress(getActivity(), "Super C Aachen")).title("Super C Aachen"));
-        mMap.setOnMyLocationButtonClickListener(this);
+            Marker TP = googleMap.addMarker(new MarkerOptions().position(getLocationFromAddress(getActivity(), "Super C Aachen")).title("Super C Aachen"));
+            mMap.setOnMyLocationButtonClickListener(this);
+        } else {
+            Log.d("ZIFFER", "Unable to get current location.");
+        }
+
         enableMyLocation();
     }
 }
