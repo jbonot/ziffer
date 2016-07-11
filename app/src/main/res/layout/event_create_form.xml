@@ -45,19 +45,29 @@
                 android:padding="12dp"
                 android:layout_marginTop="16dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText"
-                    android:hint="@string/title"
-                    android:layout_marginTop="12dp" />
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText2"
-                    android:hint="@string/location"
-                    android:layout_marginTop="12dp" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText"
+                        android:hint="@string/title"
+                        android:layout_marginTop="12dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText2"
+                        android:hint="@string/location"
+                        android:layout_marginTop="12dp" />
+
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
