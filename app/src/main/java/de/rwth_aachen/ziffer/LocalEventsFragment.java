@@ -34,9 +34,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * Displays the list of events in the area.
  */
 public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
@@ -48,13 +47,9 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private boolean mPermissionDenied = false;
     private ListAdapter listAdapter;
     private GoogleMap mMap;
-    private Context _context;
     private LocationManager _locationManager;
-    private String item;
     private SupportMapFragment supportMapFragment;
     private LatLng gpsLocation;
-    private Geocoder geocoder;
-    List<Address> addresses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,7 +88,6 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         });
     }
 
-
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -105,20 +99,15 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             mMap.setMyLocationEnabled(true);
         }
     }
-    public static void showGpsSettings(Context context){
-        Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        context.startActivity(intent);
-    }
+
     @Override
     public boolean onMyLocationButtonClick() {
-        if ( !_locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
-        {
-            showGpsSettings(getActivity());
+        if (!_locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )) {
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
-        else
-            // Return false so that we don't consume the event and the default behavior still occurs
-            // (the camera animates to the user's current position).
-            Toast.makeText(getActivity(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
         return false;
     }
 
