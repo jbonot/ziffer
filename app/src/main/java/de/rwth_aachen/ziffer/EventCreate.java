@@ -1,5 +1,6 @@
 package de.rwth_aachen.ziffer;
 
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +28,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class EventCreate extends AppCompatActivity {
+    private final static int PLACE_PICKER_REQUEST = 1;
+    private Place eventLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +123,15 @@ public class EventCreate extends AppCompatActivity {
 
         this.setupSpinner((Spinner) findViewById(R.id.maxAttendees), categories);
         this.setupSpinner((Spinner) findViewById(R.id.minAttendees), categories);
+
+        findViewById(R.id.editText2).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    openLocationPicker(v);
+                }
+            }
+        });
     }
 
     @Override
@@ -158,6 +176,31 @@ public class EventCreate extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openLocationPicker(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            Log.e("ZIFFER", e.getMessage(), e);
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Log.e("ZIFFER", e.getMessage(), e);
+            e.printStackTrace();
+        }
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                ((TextView)findViewById(R.id.editText2)).setText(place.getName());
+                this.eventLocation = place;
+            }
+        }
     }
 
     private void setupSpinner(Spinner spinner, List<String> values) {
