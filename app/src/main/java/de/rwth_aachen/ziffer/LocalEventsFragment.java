@@ -31,12 +31,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -47,6 +43,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         ActivityCompat.OnRequestPermissionsResultCallback{
     private final String TAG = this.getClass().getSimpleName();
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean zoomNeeded = true;
 
     private boolean mPermissionDenied = false;
     private ListAdapter listAdapter;
@@ -55,13 +52,14 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private LocationManager _locationManager;
     private String item;
     private SupportMapFragment supportMapFragment;
-    private Location gpsLocation;
+    private LatLng gpsLocation;
     private Geocoder geocoder;
     List<Address> addresses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.zoomNeeded = true;
         this.supportMapFragment = SupportMapFragment.newInstance();
         _locationManager = (LocationManager) getActivity().getSystemService( Context.LOCATION_SERVICE );
 
@@ -143,6 +141,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
 
     @Override
     public void onResume() {
+        this.zoomNeeded = true;
         super.onResume();
         Log.i(TAG, "onResume");
         if (mPermissionDenied) {
@@ -191,16 +190,19 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng location = getLocationFromAddress(getActivity(), "Super C Aachen");
-        if (location != null) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 9.0f));
-
-            Marker TP = googleMap.addMarker(new MarkerOptions().position(getLocationFromAddress(getActivity(), "Super C Aachen")).title("Super C Aachen"));
-            mMap.setOnMyLocationButtonClickListener(this);
-        } else {
-            Log.d("ZIFFER", "Unable to get current location.");
-        }
-
         enableMyLocation();
+
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location location) {
+                gpsLocation = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                if (zoomNeeded) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gpsLocation, 12.0f));
+                    zoomNeeded = false;
+                }
+            }
+        });
     }
 }
