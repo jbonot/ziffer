@@ -57,7 +57,10 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private SupportMapFragment supportMapFragment;
     private Location gpsLocation;
     private Geocoder geocoder;
+    private String user_name;
     List<Address> addresses;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

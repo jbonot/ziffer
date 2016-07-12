@@ -15,12 +15,14 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -57,10 +59,17 @@ public class MainActivity extends AppCompatActivity  {
             user_name = extras.getString("user_name");
             //The key argument here must match that used in the other activity
         }
+        Log.d("user_mainactivity",user_name);
+
+        ProfileFragment f = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("userkey",user_name);
+         f.setArguments(args);
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new LocalEventsFragment(), getResources().getString(R.string.nearby_events));
-        viewPagerAdapter.addFragments(new JoinedEventsFragment(), getResources().getString(R.string.joined_events));
+        viewPagerAdapter.addFragments(new JoinedEventsFragment(),getResources().getString(R.string.joined_events));
         viewPagerAdapter.addFragments(new ProfileFragment(), getResources().getString(R.string.profile));
         viewPagerAdapter.addFragments(new NotificationsFragment(), getResources().getString(R.string.notifications));
         viewPager.setAdapter(viewPagerAdapter);
@@ -118,6 +127,9 @@ public class MainActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+    public String getMyData() {
+        return user_name;
+    }
 
 
     public void createNewEvent(View view) {

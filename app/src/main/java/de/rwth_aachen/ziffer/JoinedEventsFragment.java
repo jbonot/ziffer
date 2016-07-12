@@ -18,6 +18,8 @@ import android.widget.ListView;
 public class JoinedEventsFragment extends Fragment {
 
     private ListAdapter listAdapter;
+    private String user_key;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
