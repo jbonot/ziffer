@@ -38,33 +38,18 @@ public class ProfileFragment extends Fragment {
         BackgroundTask2 backgroundTask = new BackgroundTask2(getActivity());
         backgroundTask.execute("myprofile",user_name);
 
-        BackgroundTask3 backgroundTask3 = new BackgroundTask3(getActivity());
-        backgroundTask3.execute("myevent",user_name);
 
         //getting JSON for profile
         try {
             data = backgroundTask.get().toString();
 
+
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         catch (ExecutionException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        //getting JSON for events
-        try {
-            data_event = backgroundTask3.get().toString();
-            Log.d("data_event",data_event);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (ExecutionException e) {
-            // TODO Auto-generated catch block
-
             e.printStackTrace();
         }
 
@@ -106,6 +91,22 @@ public class ProfileFragment extends Fragment {
          public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
 
+
+        BackgroundTask3 backgroundTask3 = new BackgroundTask3(getActivity());
+        backgroundTask3.execute("myevent",user_name);
+        //getting JSON for events
+        try {
+            data_event = backgroundTask3.get().toString();
+            Log.d("data_event",data_event);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+        }
           //older code here
         ListView listView = (ListView)view.findViewById(R.id.listView);
         listView.setAdapter(new TestData(data_event).getEventListAdapter(getActivity()));

@@ -46,7 +46,7 @@ public class TestData {
                title=JO.getString("title");
                location=JO.getString("location");
                e.add(new EventListItem(german_level_event, title, location));
-
+                count++;
            }
 
         }
