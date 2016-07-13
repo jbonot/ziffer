@@ -34,6 +34,7 @@
     <string name="german_level">German Level</string>
     <string name="title">Title</string>
     <string name="location">Location</string>
+    <string name="date">Date</string>
     <string name="start">Start</string>
     <string name="end">End</string>
     <string name="duration">Duration</string>

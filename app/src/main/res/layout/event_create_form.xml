@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/start"
+                        android:text="@string/date"
                         android:id="@+id/textView11"
                         android:gravity="left"
                         android:layout_weight="1" />

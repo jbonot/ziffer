@@ -6,6 +6,7 @@
     <string name="german_level">Sprachniveau</string>
     <string name="title">Titel</string>
     <string name="location">Ort</string>
+    <string name="date">Datum</string>
     <string name="start">Beginn</string>
     <string name="end">Ende</string>
     <string name="duration">Dauer</string>
