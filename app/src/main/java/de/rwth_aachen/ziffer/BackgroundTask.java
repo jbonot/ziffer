@@ -32,11 +32,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     {
         this.ctx =ctx;
     }
-    @Override
-    protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("Login Information....");
-    }
+
     @Override
     protected String doInBackground(String... params) {
         // LocalSettings class is ignored from the repository.  Must be created locally.
@@ -94,6 +90,37 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        } else if (method.equals("get_local_events")) {
+            try {
+                String urlParams =
+                        "min_lat=" + URLEncoder.encode(params[1], "UTF-8")
+                        + "&max_lat=" + URLEncoder.encode(params[2], "UTF-8")
+                        + "&min_lng=" + URLEncoder.encode(params[3], "UTF-8")
+                        + "&max_lng=" + URLEncoder.encode(params[4], "UTF-8")
+                        + "&level=" + URLEncoder.encode(params[5], "UTF-8");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "get_local_events.php").openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                int tmp;
+                String data = "";
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp = is.read())!= -1){
+                    data += (char)tmp;
+                }
+                is.close();
+                httpURLConnection.disconnect();
+                return data;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Log.e("ZIFFER", e.getMessage(), e);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("ZIFFER",e.getMessage(),e);
             }
         }
 
@@ -280,11 +307,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         else if(result.equals("Please Enter correct credentials!!!"))
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            alertDialog.setMessage(result);
-            alertDialog.show();
         }
     }
 }

@@ -24,22 +24,29 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Displays the list of events in the area.
  */
 public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback{
+        ActivityCompat.OnRequestPermissionsResultCallback {
     private final String TAG = this.getClass().getSimpleName();
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean zoomNeeded = true;
@@ -50,6 +57,10 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private LocationManager _locationManager;
     private SupportMapFragment supportMapFragment;
     private LatLng gpsLocation;
+    private double minLatitude = Double.NaN;
+    private double maxLatitude = Double.NaN;
+    private double minLongitude = Double.NaN;
+    private double maxLongitude = Double.NaN;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -193,5 +204,82 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
                 }
             }
         });
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                if (!zoomNeeded) {
+                    LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+                    fetchData(bounds);
+                }
+            }
+        });
     }
+
+    private void fetchData(LatLngBounds bounds) {
+        boolean newSearchRequired = false;
+        double minLat = bounds.southwest.latitude;
+        double maxLat = bounds.northeast.latitude;
+        double minLng = bounds.southwest.longitude;
+        double maxLng = bounds.northeast.longitude;
+
+        if (Double.isNaN(this.minLatitude)) {
+            this.minLatitude = bounds.southwest.latitude;
+            this.maxLatitude = bounds.northeast.latitude;
+            this.minLongitude = bounds.southwest.longitude;
+            this.maxLongitude = bounds.northeast.longitude;
+            newSearchRequired = true;
+        } else {
+            if (this.minLatitude > bounds.southwest.latitude) {
+                minLat = bounds.southwest.latitude;
+                maxLat = this.minLatitude;
+                this.minLatitude = bounds.southwest.latitude;
+                newSearchRequired = true;
+            }
+            if (this.maxLatitude < bounds.northeast.latitude) {
+                minLat = this.maxLatitude;
+                maxLat = bounds.northeast.latitude;
+                this.maxLatitude = bounds.northeast.latitude;
+                newSearchRequired = true;
+            }
+            if (this.minLongitude > bounds.southwest.longitude) {
+                minLng = bounds.southwest.longitude;
+                maxLng = this.minLongitude;
+                this.minLongitude = bounds.southwest.longitude;
+                newSearchRequired = true;
+            }
+            if (this.maxLongitude < bounds.northeast.longitude) {
+                minLng = this.maxLongitude;
+                maxLng = bounds.northeast.longitude;
+                this.maxLongitude = bounds.northeast.longitude;
+                newSearchRequired = true;
+            }
+        }
+
+        // We only run the query if the user has moved to an undiscovered section of the map
+        if (!newSearchRequired) {
+            return;
+        }
+
+        BackgroundTask task = new BackgroundTask(getActivity());
+        task.execute("get_local_events", Double.toString(minLat), Double.toString(maxLat),
+                Double.toString(minLng), Double.toString(maxLng), "");
+
+        try {
+            String data = task.get();
+            JSONArray arr = new JSONObject(data).getJSONArray("local_events");
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject event = new JSONObject(arr.getString(i));
+                mMap.addMarker(new MarkerOptions().position(
+                        new LatLng(event.getDouble("latitude"), event.getDouble("longitude"))));
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
