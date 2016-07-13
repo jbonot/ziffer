@@ -42,7 +42,7 @@ public class TestData {
            while(count<jsonArray.length())
            {
                JSONObject JO= jsonArray.getJSONObject(count);
-               german_level_event= JO.getString("german_level_event");
+               german_level_event= JO.getString("german_level_event").substring(0,2);
                title=JO.getString("title");
                location=JO.getString("location");
                e.add(new EventListItem(german_level_event, title, location));
