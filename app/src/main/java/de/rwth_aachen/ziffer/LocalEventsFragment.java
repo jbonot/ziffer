@@ -45,8 +45,8 @@ import java.util.Locale;
 public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback{
-    private final String TAG = this.getClass().getSimpleName();
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private String TAG = this.getClass().getSimpleName();
+    private int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private boolean mPermissionDenied = false;
     private ListAdapter listAdapter;
@@ -59,7 +59,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private Geocoder geocoder;
     private String user_name;
     List<Address> addresses;
-
+    private String local_data="";
 
 
     @Override
@@ -79,7 +79,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         // Add sample data to event list.
         supportMapFragment.getMapAsync(this);
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listAdapter = TestData.getEventListAdapter(getActivity());
+        listAdapter = new TestData(local_data).getEventListAdapter(getActivity());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -110,7 +110,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             mMap.setMyLocationEnabled(true);
         }
     }
-    public static void showGpsSettings(Context context){
+    public void showGpsSettings(Context context){
         Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         context.startActivity(intent);
     }

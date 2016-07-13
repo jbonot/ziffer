@@ -14,13 +14,13 @@ public class EventListItem {
     }
 
     public int getColor() {
-        if (this.level == "A1") {
+        if (this.level.contains("A1")){
             return Color.RED;
-        } else if (this.level == "A2") {
+        } else if (this.level.contains("A2")) {
             return Color.GREEN;
-        } else if (this.level == "B1") {
+        } else if (this.level.contains("B1")) {
             return Color.MAGENTA;
-        } else if (this.level == "B2") {
+        } else if (this.level.contains("B2")) {
             return Color.YELLOW;
         }
 

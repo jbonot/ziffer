@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-    private  String user_name;
+    private  String user_name,data_event="";
 
 
 
@@ -33,11 +33,18 @@ public class ProfileFragment extends Fragment {
         String data="",firstName="",lastName="",dob="",german_level="",description="";
         MainActivity activity = (MainActivity) getActivity();
          user_name = activity.getMyData();
+
+
         BackgroundTask2 backgroundTask = new BackgroundTask2(getActivity());
         backgroundTask.execute("myprofile",user_name);
 
+        BackgroundTask3 backgroundTask3 = new BackgroundTask3(getActivity());
+        backgroundTask3.execute("myevent",user_name);
+
+        //getting JSON for profile
         try {
             data = backgroundTask.get().toString();
+
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -46,6 +53,21 @@ public class ProfileFragment extends Fragment {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        //getting JSON for events
+        try {
+            data_event = backgroundTask3.get().toString();
+            Log.d("data_event",data_event);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+        }
+
 
         try
         {   Log.d("checkdata",dob);
@@ -66,7 +88,7 @@ public class ProfileFragment extends Fragment {
             Log.d("JSONexception",e.toString());
             e.printStackTrace();
         }
-        final View view =  inflater.inflate(R.layout.profile_fragment, container, false);
+         View view =  inflater.inflate(R.layout.profile_fragment, container, false);
         TextView headline_text = (TextView)view.findViewById(R.id.headline);
         TextView germanLevel_text = (TextView)view.findViewById(R.id.germanLevel);
         TextView description_text = (TextView)view.findViewById(R.id.description);
@@ -83,13 +105,10 @@ public class ProfileFragment extends Fragment {
     @Override
          public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
-        String result="";
-       // String user_name = this.getArguments().getString("userkey");
-        Log.d("userid",user_name);
 
-
+          //older code here
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listView.setAdapter(TestData.getEventListAdapter(getActivity()));
+        listView.setAdapter(new TestData(data_event).getEventListAdapter(getActivity()));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
