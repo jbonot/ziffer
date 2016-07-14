@@ -38,14 +38,16 @@ public class TestData {
             JSONObject root = new JSONObject(data_event);
             jsonArray= root.getJSONArray("event_data");
             int count=0;
-            String german_level_event,title,location;
+            String german_level_event,title,name,address;
            while(count<jsonArray.length())
            {
                JSONObject JO= jsonArray.getJSONObject(count);
                german_level_event= JO.getString("german_level_event").substring(0,2);
                title=JO.getString("title");
-               location=JO.getString("location");
-               e.add(new EventListItem(german_level_event, title, location));
+               name=JO.getString("name");
+               address=JO.getString("address");
+
+               e.add(new EventListItem(german_level_event, title, name + " " + address));
                 count++;
            }
 

@@ -72,7 +72,7 @@ public class BackgroundTask3 extends AsyncTask<String,Void,String> {
                 is.close();
                 httpURLConnection.disconnect();
                 Log.d("EventSelectData",data);
-                if(data.contains("event_id"))
+                if(data.contains("german_level_event"))
                 {
                 return data;
                 }
