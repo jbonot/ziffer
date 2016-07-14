@@ -12,10 +12,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+import org.joda.time.Years;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -73,12 +78,26 @@ public class ProfileFragment extends Fragment {
             Log.d("JSONexception",e.toString());
             e.printStackTrace();
         }
-         View view =  inflater.inflate(R.layout.profile_fragment, container, false);
+        String age[] = new String[3];
+       int i=0;
+        Pattern pattern = Pattern.compile("\\w+");
+        Matcher matcher = pattern.matcher(dob);
+        while (matcher.find()) {
+          age[i] = matcher.group();
+            i++;
+        }
+
+        LocalDate birthdate = new LocalDate (Integer.parseInt(age[0]), Integer.parseInt(age[1]),Integer.parseInt(age[2]));
+        LocalDate now = new LocalDate();
+        Years current = Years.yearsBetween(birthdate, now);
+        String current_age=current.toString();
+        current_age = current_age.replaceAll("\\D+","");
+        View view =  inflater.inflate(R.layout.profile_fragment, container, false);
         TextView headline_text = (TextView)view.findViewById(R.id.headline);
         TextView germanLevel_text = (TextView)view.findViewById(R.id.germanLevel);
         TextView description_text = (TextView)view.findViewById(R.id.description);
 
-        headline_text.setText(firstName + " " + lastName + " , " + dob);
+        headline_text.setText(firstName + " " + lastName + ", " + current_age);
         germanLevel_text.setText(german_level);
         description_text.setText(description);
 
