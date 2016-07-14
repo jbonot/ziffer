@@ -122,6 +122,32 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
                 Log.e("ZIFFER",e.getMessage(),e);
             }
+        } else if (method.equals("check_new_notifications")) {
+            try {
+                String urlParams = "user_recipient=" + URLEncoder.encode(params[1], "UTF-8");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "check_new_notifications.php").openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                int tmp;
+                String data = "";
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp = is.read())!= -1){
+                    data += (char)tmp;
+                }
+                is.close();
+                httpURLConnection.disconnect();
+                return data;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Log.e("ZIFFER", e.getMessage(), e);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("ZIFFER",e.getMessage(),e);
+            }
         }
 
         else if (method.equals("register"))

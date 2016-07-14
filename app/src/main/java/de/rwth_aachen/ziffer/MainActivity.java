@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity  {
     String user_name = "";
@@ -65,6 +66,13 @@ public class MainActivity extends AppCompatActivity  {
         viewPagerAdapter.addFragments(new NotificationsFragment(), getResources().getString(R.string.notifications));
         viewPager.setAdapter(viewPagerAdapter);
         ((IconTextTabLayout) findViewById(R.id.tabLayout)).setupWithViewPager(viewPager);
+
+        this.checkForNewNotifications();
+    }
+
+    public void onResume() {
+        super.onResume();
+        this.checkForNewNotifications();
     }
 
     @Override
@@ -118,7 +126,18 @@ public class MainActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
-
+    private void checkForNewNotifications() {
+        BackgroundTask task = new BackgroundTask(this);
+        task.execute("check_new_notifications", "andrea.allen");
+        try {
+            int notifications = Integer.parseInt(task.get());
+            Toast.makeText(this, String.format("You have %d notifications", notifications), Toast.LENGTH_LONG).show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void createNewEvent(View view) {
         Intent intent = new Intent(this, EventCreate.class);
