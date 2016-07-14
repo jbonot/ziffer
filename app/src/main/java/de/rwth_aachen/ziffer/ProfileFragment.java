@@ -1,14 +1,18 @@
 package de.rwth_aachen.ziffer;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,12 +34,15 @@ public class ProfileFragment extends Fragment {
     private  String user_name,data_event="";
 
 
+    private Bitmap bmp;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String data="",firstName="",lastName="",dob="",german_level="",description="";
+        String data="",firstName="",lastName="",dob="",german_level="",description="",Qrimage="";
         MainActivity activity = (MainActivity) getActivity();
          user_name = activity.getMyData();
 
@@ -68,6 +75,10 @@ public class ProfileFragment extends Fragment {
             dob= root.getJSONObject("profile_data").getString("dob");
             german_level=root.getJSONObject("profile_data").getString("german_level");
             description=root.getJSONObject("profile_data").getString("description");
+            Qrimage=root.getJSONObject("profile_data").getString("photo");
+            byte[] qrimage = Base64.decode(Qrimage.getBytes(),0);
+
+            bmp = BitmapFactory.decodeByteArray(qrimage, 0, qrimage.length);
 
             Log.d("checkdob",dob);
 
@@ -96,10 +107,16 @@ public class ProfileFragment extends Fragment {
         TextView headline_text = (TextView)view.findViewById(R.id.headline);
         TextView germanLevel_text = (TextView)view.findViewById(R.id.germanLevel);
         TextView description_text = (TextView)view.findViewById(R.id.description);
+        TextView eventListHeadline = (TextView)view.findViewById(R.id.eventListHeadline);
 
         headline_text.setText(firstName + " " + lastName + ", " + current_age);
         germanLevel_text.setText(german_level);
         description_text.setText(description);
+        eventListHeadline.setText(firstName+"'s Event");
+
+        ImageView imageview = (ImageView)view.findViewById(R.id.image);
+
+        imageview.setImageBitmap(bmp);
 
     return view;
       //  return inflater.inflate(R.layout.profile_fragment, container, false);
