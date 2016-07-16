@@ -61,6 +61,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private double maxLatitude = Double.NaN;
     private double minLongitude = Double.NaN;
     private double maxLongitude = Double.NaN;
+    private String local_data="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,7 +81,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         // Add sample data to event list.
         supportMapFragment.getMapAsync(this);
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listAdapter = TestData.getEventListAdapter(getActivity());
+        listAdapter = new TestData(local_data).getEventListAdapter(getActivity());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -110,7 +111,10 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             mMap.setMyLocationEnabled(true);
         }
     }
-
+    public void showGpsSettings(Context context){
+        Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        context.startActivity(intent);
+    }
     @Override
     public boolean onMyLocationButtonClick() {
         if (!_locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )) {

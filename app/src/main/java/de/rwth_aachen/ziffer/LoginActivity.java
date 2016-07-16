@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
             BackgroundTask backgroundTask = new BackgroundTask(this);
             backgroundTask.execute("login",username,password);
-            finish();
+
             Log.d("registration",username);
 
             //mAuthTask = new UserLoginTask(username, password);

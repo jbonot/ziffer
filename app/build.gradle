@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.android.gms:play-services-maps:9.0.2'
     compile 'com.google.android.gms:play-services-location:9.0.2'
+    compile 'joda-time:joda-time:2.9.4'
 }

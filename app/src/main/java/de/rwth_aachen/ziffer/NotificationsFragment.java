@@ -18,7 +18,7 @@ import android.widget.ListView;
 public class NotificationsFragment extends Fragment {
 
     private ListAdapter listAdapter;
-
+        private String notification_data="";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listAdapter = TestData.getNotificationListAdapter(getActivity());
+        listAdapter = new TestData(notification_data).getNotificationListAdapter(getActivity());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

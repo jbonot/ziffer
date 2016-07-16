@@ -332,7 +332,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         }
         else if(result.equals("Please Enter correct credentials!!!"))
         {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+
+            Intent i = new Intent(ctx,LoginActivity.class);
         }
     }
 }

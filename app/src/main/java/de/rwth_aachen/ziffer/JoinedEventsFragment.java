@@ -18,6 +18,9 @@ import android.widget.ListView;
 public class JoinedEventsFragment extends Fragment {
 
     private ListAdapter listAdapter;
+    private String user_key;
+    private String joined_data="";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,7 +32,7 @@ public class JoinedEventsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listAdapter = TestData.getEventListAdapter(getActivity());
+        listAdapter = new TestData(joined_data).getEventListAdapter(getActivity());
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
