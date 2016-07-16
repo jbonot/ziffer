@@ -16,12 +16,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.Years;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +39,7 @@ public class ProfileFragment extends Fragment {
     private  String user_name,data_event="";
 
 
-    private Bitmap bmp;
+
 
 
 
@@ -42,10 +47,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String data="",firstName="",lastName="",dob="",german_level="",description="",Qrimage="";
+        String data="",firstName="",lastName="",dob="",german_level="",description="",Qrimage="",image_url="";
         MainActivity activity = (MainActivity) getActivity();
          user_name = activity.getMyData();
-
+        Bitmap bmp=null;
 
         BackgroundTask2 backgroundTask = new BackgroundTask2(getActivity());
         backgroundTask.execute("myprofile",user_name);
@@ -53,8 +58,9 @@ public class ProfileFragment extends Fragment {
 
         //getting JSON for profile
         try {
-            data = backgroundTask.get().toString();
 
+            data = backgroundTask.get().toString();
+            Log.d("datafromprofile",data);
 
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
@@ -75,10 +81,11 @@ public class ProfileFragment extends Fragment {
             dob= root.getJSONObject("profile_data").getString("dob");
             german_level=root.getJSONObject("profile_data").getString("german_level");
             description=root.getJSONObject("profile_data").getString("description");
-            Qrimage=root.getJSONObject("profile_data").getString("photo");
-            byte[] qrimage = Base64.decode(Qrimage.getBytes(),0);
+            Qrimage=root.getJSONObject("profile_data").getString("image");
+            image_url=LocalSettings.Base_URL + "image/"+ Qrimage;
+        //    URL url = new URL(image_url);
+            Log.d("image_url",image_url);
 
-            bmp = BitmapFactory.decodeByteArray(qrimage, 0, qrimage.length);
 
             Log.d("checkdob",dob);
 
@@ -89,6 +96,7 @@ public class ProfileFragment extends Fragment {
             Log.d("JSONexception",e.toString());
             e.printStackTrace();
         }
+
         String age[] = new String[3];
        int i=0;
         Pattern pattern = Pattern.compile("\\w+");
@@ -115,8 +123,8 @@ public class ProfileFragment extends Fragment {
         eventListHeadline.setText(firstName+"'s Event");
 
         ImageView imageview = (ImageView)view.findViewById(R.id.image);
-
-        imageview.setImageBitmap(bmp);
+        Picasso.with(getActivity()).load(image_url).into(imageview);
+       // imageview.setImageBitmap(bmp);
 
     return view;
       //  return inflater.inflate(R.layout.profile_fragment, container, false);
@@ -150,6 +158,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), EventDetails.class);
+                intent.putExtra("data_event",data_event);
                 startActivity(intent);
             }
         });
