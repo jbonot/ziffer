@@ -54,6 +54,7 @@ public class NotificationsFragment extends Fragment {
         task.execute("get_notifications", "andrea.allen");
         try {
             String data = task.get();
+            List<String> unread = new ArrayList<>();
             List<NotificationListItem> list = new ArrayList<>();
             JSONArray arr = new JSONObject(data).getJSONArray("notifications");
             for (int i = 0; i < arr.length(); i++) {
@@ -86,7 +87,13 @@ public class NotificationsFragment extends Fragment {
                 String formatString = getResources().getStringArray(R.array.notifications_array)[notification.getInt("message_type")];
                 String senderName = notification.getString("sender_firstname") + " " + notification.getString("sender_lastname");
                 NotificationListItem item = new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), timeDifferenceStr);
-                item.setIsRead(notification.getInt("read_status") == 1);
+
+                if (notification.getInt("read_status") == 1) {
+                    item.setIsRead(true);
+                } else {
+                    unread.add(notification.getString("notification_id"));
+                }
+
                 if (!notification.getString("sender_image").equals("")) {
                     item.setImageFile(notification.getString("sender_image"));
                 }
@@ -96,6 +103,16 @@ public class NotificationsFragment extends Fragment {
 
             listAdapter = new NotificationListAdapter(getActivity(),list.toArray(new NotificationListItem[0]));
             listView.setAdapter(listAdapter);
+
+            if (unread.size() > 0) {
+                String toUpdate = "";
+                for (String id : unread) {
+                    toUpdate += id + " ";
+                }
+
+                new BackgroundTask().execute("update_notification_status", toUpdate.substring(0, toUpdate.length() - 1));
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -145,7 +162,25 @@ public class NotificationsFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else if (params[0].equals("update_notification_status")) {
+                try
+                {
+                    String urlParams = "notification_ids=" + URLEncoder.encode(params[1], "UTF-8");
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "update_notification_status.php").openConnection();
+                    httpURLConnection.setDoOutput(true);
+                    OutputStream os = httpURLConnection.getOutputStream();
+                    os.write(urlParams.getBytes());
+                    os.flush();
+                    os.close();
+                    httpURLConnection.disconnect();
+                    return "SUCCESS";
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
             return null;
         }
     }
