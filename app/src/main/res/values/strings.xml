@@ -58,6 +58,7 @@
     <string name="error_invalid_date_of_birth">Date of birth is invalid</string>
     <string name="error_unselected_german_level">Select your current German level</string>
     <string name="select_photo">Select photo</string>
+	<string name="moments_ago">Moments ago</string>
 
     <string-array name="notifications_array" formatted="false">
         <item>%s has joined your event "%s."</item>
@@ -66,5 +67,19 @@
         <item>%s has deleted the event "%s."</item>
         <item>"%s" starts in 1 hour.</item>
     </string-array>
-
+	
+    <plurals name="minutes_ago">
+        <item quantity="one">%d minute ago</item>
+        <item quantity="other">%d minutes ago</item>
+    </plurals>
+	
+    <plurals name="hours_ago">
+        <item quantity="one">%d hour ago</item>
+        <item quantity="other">%d hours ago</item>
+    </plurals>
+	
+    <plurals name="days_ago">
+        <item quantity="one">%d day ago</item>
+        <item quantity="other">%d days ago</item>
+    </plurals>
 </resources>

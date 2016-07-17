@@ -23,9 +23,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -57,9 +62,30 @@ public class NotificationsFragment extends Fragment {
                 notification.getInt("event_id");
                 notification.getInt("read_status");
                 notification.getString("user_sender");
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date date = formatter.parse(notification.getString("timestamp"));
+                Calendar c = Calendar.getInstance();
+                long timeDifference = c.getTimeInMillis() - date.getTime();
+                String timeDifferenceStr = "";
+                int days = (int)TimeUnit.MILLISECONDS.toDays(timeDifference);
+                int hours = (int)(TimeUnit.MILLISECONDS.toHours(timeDifference) -
+                        TimeUnit.MINUTES.toHours(TimeUnit.MILLISECONDS.toDays(timeDifference)));
+                int minutes = (int)(TimeUnit.MILLISECONDS.toMinutes(timeDifference) -
+                        TimeUnit.MILLISECONDS.toMinutes(TimeUnit.MINUTES.toHours(TimeUnit.MILLISECONDS.toDays(timeDifference))));
+                if (days > 0) {
+                    timeDifferenceStr = getResources().getQuantityString(R.plurals.days_ago, days + 1, days + 1);
+                } else if (hours > 0) {
+                    timeDifferenceStr = getResources().getQuantityString(R.plurals.hours_ago, hours + 1, hours + 1);
+                } else if (minutes > 0) {
+                    timeDifferenceStr = getResources().getQuantityString(R.plurals.minutes_ago, minutes + 1, minutes + 1);
+                } else {
+                    timeDifferenceStr = getResources().getString(R.string.moments_ago);
+                }
+
                 String formatString = getResources().getStringArray(R.array.notifications_array)[notification.getInt("message_type")];
                 String senderName = notification.getString("sender_firstname") + " " + notification.getString("sender_lastname");
-                list.add(new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), notification.getString("timestamp")));
+                list.add(new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), timeDifferenceStr));
             }
 
             listAdapter = new NotificationListAdapter(getActivity(),list.toArray(new NotificationListItem[0]));
@@ -69,6 +95,8 @@ public class NotificationsFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         
@@ -106,8 +134,7 @@ public class NotificationsFragment extends Fragment {
                     is.close();
                     httpURLConnection.disconnect();
                     return data;
-                }
-                catch (MalformedURLException e) {
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
