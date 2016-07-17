@@ -85,7 +85,12 @@ public class NotificationsFragment extends Fragment {
 
                 String formatString = getResources().getStringArray(R.array.notifications_array)[notification.getInt("message_type")];
                 String senderName = notification.getString("sender_firstname") + " " + notification.getString("sender_lastname");
-                list.add(new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), timeDifferenceStr));
+                NotificationListItem item = new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), timeDifferenceStr);
+                if (!notification.getString("sender_image").equals("")) {
+                    item.setImageFile(notification.getString("sender_image"));
+                }
+
+                list.add(item);
             }
 
             listAdapter = new NotificationListAdapter(getActivity(),list.toArray(new NotificationListItem[0]));

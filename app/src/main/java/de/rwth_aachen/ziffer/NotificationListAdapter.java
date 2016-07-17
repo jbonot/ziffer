@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class NotificationListAdapter extends ArrayAdapter<NotificationListItem> {
 
@@ -27,6 +30,13 @@ public class NotificationListAdapter extends ArrayAdapter<NotificationListItem> 
                 .setText(this.values[position].getMessage());
         ((TextView)rowView.findViewById(R.id.date))
                 .setText(this.values[position].getTimestamp());
+
+        if (this.values[position].getImageFile() != null &&
+                !this.values[position].getImageFile().isEmpty()) {
+            Picasso.with(rowView.getContext()).load(
+                    LocalSettings.Base_URL + "./image/" + this.values[position].getImageFile())
+                    .into((ImageView) rowView.findViewById(R.id.icon));
+        }
 
         return rowView;
     }

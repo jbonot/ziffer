@@ -15,7 +15,8 @@ if ($con->connect_error) {
 
 $sql = "SELECT n.notifications_id, n.event_id, n.event_name,
 		n.message_type, n.timestamp, n.read_status,
-		n.user_sender, profile_data.firstName, profile_data.lastName
+		n.user_sender, profile_data.firstName, profile_data.lastName,
+		profile_data.image as sender_image
 		FROM profile_data JOIN
 			(SELECT notifications.notifications_id, notifications.event_id,
 			notifications.message_type, notifications.timestamp,
@@ -40,7 +41,8 @@ while($row = mysqli_fetch_array($result)){
    'read_status' => $row[5],
    'user_sender' => $row[6],
    'sender_firstname' => $row[7],
-   'sender_lastname' => $row[8]));
+   'sender_lastname' => $row[8],
+   'sender_image' => $row[9]));
 }
 
 function utf8ize($d) {

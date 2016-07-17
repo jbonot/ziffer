@@ -4,6 +4,8 @@ public class NotificationListItem {
 
     private String message;
     private String timestamp;
+    private String sender;
+    private String imageFile;
 
     public NotificationListItem(String message, String timestamp) {
         this.message = message;
@@ -18,4 +20,19 @@ public class NotificationListItem {
         return this.timestamp;
     }
 
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
+    }
 }
