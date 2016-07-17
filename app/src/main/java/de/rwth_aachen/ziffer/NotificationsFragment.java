@@ -86,6 +86,7 @@ public class NotificationsFragment extends Fragment {
                 String formatString = getResources().getStringArray(R.array.notifications_array)[notification.getInt("message_type")];
                 String senderName = notification.getString("sender_firstname") + " " + notification.getString("sender_lastname");
                 NotificationListItem item = new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), timeDifferenceStr);
+                item.setIsRead(notification.getInt("read_status") == 1);
                 if (!notification.getString("sender_image").equals("")) {
                     item.setImageFile(notification.getString("sender_image"));
                 }

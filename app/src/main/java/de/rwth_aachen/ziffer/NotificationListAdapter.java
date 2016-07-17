@@ -38,6 +38,10 @@ public class NotificationListAdapter extends ArrayAdapter<NotificationListItem> 
                     .into((ImageView) rowView.findViewById(R.id.icon));
         }
 
+        if (!this.values[position].isRead()) {
+            rowView.setBackgroundColor(0x50A8DADC);
+        }
+
         return rowView;
     }
 }

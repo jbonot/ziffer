@@ -6,6 +6,7 @@ public class NotificationListItem {
     private String timestamp;
     private String sender;
     private String imageFile;
+    private boolean isRead;
 
     public NotificationListItem(String message, String timestamp) {
         this.message = message;
@@ -34,5 +35,13 @@ public class NotificationListItem {
 
     public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setIsRead(boolean isRead) {
+        this.isRead = isRead;
     }
 }
