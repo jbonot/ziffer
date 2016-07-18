@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity  {
     }
     private void checkForNewNotifications() {
         BackgroundTask task = new BackgroundTask(this);
-        task.execute("check_new_notifications", "andrea.allen");
+        task.execute("check_new_notifications", SaveSharedPreference.getUserName(this));
         try {
             int notifications = Integer.parseInt(task.get());
             Toast.makeText(this, String.format("You have %d notifications", notifications), Toast.LENGTH_LONG).show();

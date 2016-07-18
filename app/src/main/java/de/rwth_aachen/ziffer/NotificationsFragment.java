@@ -74,7 +74,7 @@ public class NotificationsFragment extends Fragment {
     private void fetchNotifications() {
         Log.d("ZIFFER_notifications", "fetchNotifications");
         BackgroundTask task = new BackgroundTask();
-        task.execute("get_notifications", "andrea.allen");
+        task.execute("get_notifications", SaveSharedPreference.getUserName(getActivity()));
         try {
             String data = task.get();
             List<String> unread = new ArrayList<>();
