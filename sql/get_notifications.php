@@ -25,7 +25,8 @@ $sql = "SELECT n.notifications_id, n.event_id, n.event_name,
 			FROM notifications JOIN event
 			ON event.event_id = notifications.event_id
 			WHERE user_recipient='$user_recipient') AS n
-		ON n.user_sender = profile_data.user_name;";
+		ON n.user_sender = profile_data.user_name
+		ORDER BY n.timestamp DESC;";
 
 
 $result = mysqli_query($con, $sql);
