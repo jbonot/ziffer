@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,8 @@ import java.util.concurrent.TimeUnit;
 public class NotificationsFragment extends Fragment {
 
     private ListAdapter listAdapter;
-        private String notification_data="";
+    private ListView listView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +51,28 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
-        ListView listView = (ListView)view.findViewById(R.id.listView);
+        this.listView = (ListView)view.findViewById(R.id.listView);
+        this.fetchNotifications();
+        
+       this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), EventDetails.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible && isAdded()) {
+            this.fetchNotifications();
+        }
+    }
+
+    private void fetchNotifications() {
+        Log.d("ZIFFER_notifications", "fetchNotifications");
         BackgroundTask task = new BackgroundTask();
         task.execute("get_notifications", "andrea.allen");
         try {
@@ -110,6 +133,7 @@ public class NotificationsFragment extends Fragment {
                     toUpdate += id + " ";
                 }
 
+                Log.d("ZIFFER_notifications", toUpdate);
                 new BackgroundTask().execute("update_notification_status", toUpdate.substring(0, toUpdate.length() - 1));
             }
 
@@ -122,14 +146,6 @@ public class NotificationsFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), EventDetails.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private class BackgroundTask extends AsyncTask<String,Void,String> {
@@ -172,6 +188,17 @@ public class NotificationsFragment extends Fragment {
                     os.write(urlParams.getBytes());
                     os.flush();
                     os.close();
+
+                    int tmp;
+                    String data = "";
+                    InputStream is = httpURLConnection.getInputStream();
+                    while((tmp = is.read())!= -1){
+                        data += (char)tmp;
+                    }
+
+                    is.close();
+
+                    Log.d("ZIFFER_notifications", data);
                     httpURLConnection.disconnect();
                     return "SUCCESS";
                 } catch (MalformedURLException e) {
