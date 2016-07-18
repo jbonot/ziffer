@@ -324,6 +324,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             }
 
+            SaveSharedPreference.setUserName(ctx, user_name);
             Intent i = new Intent(ctx,MainActivity.class);
             i.putExtra("user_name",user_name);
             ctx.startActivity(i);

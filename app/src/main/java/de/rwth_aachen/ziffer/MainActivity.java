@@ -52,6 +52,13 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(SaveSharedPreference.getUserName(MainActivity.this).length() == 0)
+        {
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -128,6 +135,7 @@ public class MainActivity extends AppCompatActivity  {
             recreate();
             return true;
         } else if (id == R.id.action_logout) {
+            SaveSharedPreference.setUserName(this, "");
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
