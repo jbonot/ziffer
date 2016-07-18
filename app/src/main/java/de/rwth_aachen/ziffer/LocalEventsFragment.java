@@ -36,6 +36,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -50,6 +52,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
 
     private boolean mPermissionDenied = false;
     private ListAdapter listAdapter;
+    private ListView listView;
     private GoogleMap mMap;
     private LocationManager _locationManager;
     private SupportMapFragment supportMapFragment;
@@ -77,9 +80,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
         supportMapFragment.getMapAsync(this);
-        ListView listView = (ListView)view.findViewById(R.id.listView);
-        listAdapter = new TestData(local_data).getEventListAdapter(getActivity());
-        listView.setAdapter(listAdapter);
+        listView = (ListView)view.findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -235,11 +236,17 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         try {
             String data = task.get();
             JSONArray arr = new JSONObject(data).getJSONArray("local_events");
+            List<EventListItem> events = new ArrayList<>();
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject event = new JSONObject(arr.getString(i));
+                String address = event.getString("location_name") + ", " + event.getString("address");
+                events.add(new EventListItem(event.getString("german_level"), event.getString("title"), address));
                 mMap.addMarker(new MarkerOptions().position(
                         new LatLng(event.getDouble("latitude"), event.getDouble("longitude"))));
             }
+
+            listAdapter = new EventListAdapter(getActivity(), events.toArray(new EventListItem[0]));
+            listView.setAdapter(listAdapter);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

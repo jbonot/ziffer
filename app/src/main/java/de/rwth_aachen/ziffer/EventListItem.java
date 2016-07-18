@@ -10,7 +10,7 @@ public class EventListItem {
     public EventListItem(String level, String headline, String description) {
         this.headline = headline;
         this.description = description;
-        this.level = level;
+        this.level = level.substring(0,2);
     }
 
     public int getColor() {
