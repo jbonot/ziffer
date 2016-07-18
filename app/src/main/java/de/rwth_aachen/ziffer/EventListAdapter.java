@@ -25,6 +25,8 @@ public class EventListAdapter extends ArrayAdapter<EventListItem> {
                 .inflate(R.layout.event_list_item, parent, false);
         ((GradientDrawable)rowView.findViewById(R.id.level).getBackground())
                 .setColor(this.values[position].getColor());
+        ((TextView) rowView.findViewById(R.id.event_id))
+                .setText(String.valueOf(this.values[position].getId()));
         ((TextView) rowView.findViewById(R.id.level))
                 .setText(this.values[position].getLevel());
         ((TextView)rowView.findViewById(R.id.title))

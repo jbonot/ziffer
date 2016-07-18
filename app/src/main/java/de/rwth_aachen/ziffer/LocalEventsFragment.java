@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -85,6 +86,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), EventDetails.class);
+                intent.putExtra("event_id", Integer.parseInt(((TextView) view.findViewById(R.id.event_id)).getText().toString()));
                 startActivity(intent);
             }
         });
@@ -239,8 +241,12 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             List<EventListItem> events = new ArrayList<>();
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject event = new JSONObject(arr.getString(i));
-                String address = event.getString("location_name") + ", " + event.getString("address");
-                events.add(new EventListItem(event.getString("german_level"), event.getString("title"), address));
+                EventListItem item = new EventListItem();
+                item.setId(event.getInt("event_id"));
+                item.setHeadline(event.getString("title"));
+                item.setDescription(event.getString("location_name") + ", " + event.getString("address"));
+                item.setLevel(event.getString("german_level"));
+                events.add(item);
                 mMap.addMarker(new MarkerOptions().position(
                         new LatLng(event.getDouble("latitude"), event.getDouble("longitude"))));
             }
