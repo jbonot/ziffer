@@ -5,8 +5,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -38,7 +36,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -111,10 +108,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
             mMap.setMyLocationEnabled(true);
         }
     }
-    public void showGpsSettings(Context context){
-        Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        context.startActivity(intent);
-    }
+
     @Override
     public boolean onMyLocationButtonClick() {
         if (!_locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )) {
@@ -159,37 +153,6 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getActivity().getSupportFragmentManager(), "dialog");
     }
-
-    public LatLng getLocationFromAddress(Context context,String strAddress) {
-
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
-
-        try {
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
-                Log.d("ZIFFER", "address is null");
-                return null;
-            }
-            Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-
-        } catch (Exception ex) {
-            Log.e("ZIFFER", ex.getMessage(), ex);
-            ex.printStackTrace();
-        }
-
-        if (p1 == null) {
-            Log.d("ZIFFER", "returning null");
-        }
-        return p1;
-    }
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
