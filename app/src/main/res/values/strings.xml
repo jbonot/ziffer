@@ -50,6 +50,7 @@
     <string name="b1_intermediate">B1 - Intermediate</string>
     <string name="b2_upper_intermediate">B2 - Upper Intermediate</string>
     <string name="c1_advanced">C1 - Advanced</string>
+    <string name="date_from_to" formatted="false">%s at %s - %s</string>
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
