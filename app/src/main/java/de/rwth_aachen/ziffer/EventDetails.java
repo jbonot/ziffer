@@ -39,28 +39,9 @@ public class EventDetails extends AppCompatActivity {
 
         int eventId = getIntent().getIntExtra("event_id", 0);
         this.fetchBasicData(eventId);
-
-        findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Remove hard-coded data.
-                BackgroundTask task = new BackgroundTask();
-                task.execute("add_notification",
-                        "andrea.allen", "maxmusterman", Integer.toString(1), Integer.toString(0));
-                try {
-                    if (task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
-                        Toast.makeText(v.getContext(), "Notification sent", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
-    private void fetchBasicData(int eventId){
+    private void fetchBasicData(final int eventId){
         BackgroundTask task = new BackgroundTask();
         task.execute("get_event", String.valueOf(eventId));
         try {
@@ -118,6 +99,25 @@ public class EventDetails extends AppCompatActivity {
                     Intent intent = new Intent(EventDetails.this, ProfileActivity.class);
                     intent.putExtra("username", hostUsername);
                     startActivity(intent);
+                }
+            });
+
+            findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BackgroundTask task = new BackgroundTask();
+                    task.execute("add_notification",
+                            hostUsername, SaveSharedPreference.getUserName(v.getContext()),
+                            Integer.toString(eventId), Integer.toString(0));
+                    try {
+                        if (task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
+                            Toast.makeText(v.getContext(), "Notification sent", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         } catch (Exception e) {
