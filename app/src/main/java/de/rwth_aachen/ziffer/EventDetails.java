@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -108,60 +109,15 @@ public class EventDetails extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             if (params[0].equals("get_event")) {
-                try
-                {
-                    String urlParams = "event_id=" + URLEncoder.encode(params[1], "UTF-8");
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "get_event.php").openConnection();
-                    httpURLConnection.setDoOutput(true);
-                    OutputStream os = httpURLConnection.getOutputStream();
-                    os.write(urlParams.getBytes());
-                    os.flush();
-                    os.close();
-
-                    int tmp;
-                    String data = "";
-                    InputStream is = httpURLConnection.getInputStream();
-                    while((tmp = is.read())!= -1){
-                        data += (char)tmp;
-                    }
-
-                    is.close();
-
-                    Log.d("ZIFFER_event", data);
-                    httpURLConnection.disconnect();
-                    return data;
-                }
-                catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                try {
+                    return this.fetch("get_event.php", "event_id=" + URLEncoder.encode(params[1], "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             } else if (params[0].equals("get_location")) {
-                try
-                {
-                    String urlParams = "location_id=" + URLEncoder.encode(params[1], "UTF-8");
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "get_location.php").openConnection();
-                    httpURLConnection.setDoOutput(true);
-                    OutputStream os = httpURLConnection.getOutputStream();
-                    os.write(urlParams.getBytes());
-                    os.flush();
-                    os.close();
-
-                    int tmp;
-                    String data = "";
-                    InputStream is = httpURLConnection.getInputStream();
-                    while((tmp = is.read())!= -1){
-                        data += (char)tmp;
-                    }
-
-                    is.close();
-
-                    httpURLConnection.disconnect();
-                    return data;
-                }
-                catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                try {
+                    return this.fetch("get_location.php", "location_id=" + URLEncoder.encode(params[1], "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             } else if (params[0].equals("add_notification")) {
@@ -196,6 +152,35 @@ public class EventDetails extends AppCompatActivity {
 
                 }
             }
+            return null;
+        }
+
+        private String fetch(String file, String urlParams) {
+            try
+            {
+                HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + file).openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                int tmp;
+                String data = "";
+                InputStream is = httpURLConnection.getInputStream();
+                while((tmp = is.read())!= -1){
+                    data += (char)tmp;
+                }
+
+                is.close();
+
+                httpURLConnection.disconnect();
+                return data;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
     }
