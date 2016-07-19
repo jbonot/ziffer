@@ -66,6 +66,7 @@
     <string name="cancel_attendance">Cancel Attendance</string>
     <string name="delete_event">Delete Event</string>
     <string name="notify_join_success">You\'ve been added to the guest list!</string>
+    <string name="notify_remove_guest_success">You\'ve been removed from the guest list</string>
 
     <string-array name="notifications_array" formatted="false">
         <item>%s has joined your event \"%s.\"</item>

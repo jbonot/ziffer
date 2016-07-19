@@ -168,15 +168,20 @@ public class EventDetails extends AppCompatActivity {
             findViewById(R.id.button_cancel_attendance).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    BackgroundTask cancelTask = new BackgroundTask();
+                    cancelTask.execute("delete_event_guest", Integer.toString(eventId),
+                            SaveSharedPreference.getUserName(v.getContext()));
                     BackgroundTask task = new BackgroundTask();
                     task.execute("add_notification",
                             hostUsername, SaveSharedPreference.getUserName(v.getContext()),
                             Integer.toString(eventId), NOTIFICATION_CANCEL_EVENT_ATTENDANCE);
                     try {
-                        if (task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
-                            Toast.makeText(v.getContext(), "Notification sent", Toast.LENGTH_SHORT).show();
+                        if (cancelTask.get().equals(BackgroundTask.RESULT_SUCCESS)
+                                && task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
+                            Toast.makeText(v.getContext(),
+                                    getResources().getString(R.string.notify_remove_guest_success),
+                                    Toast.LENGTH_SHORT).show();
                             setActionButton(R.id.button_join);
-
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -262,6 +267,17 @@ public class EventDetails extends AppCompatActivity {
                 catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else if (params[0].equals("delete_event_guest")) {
+
+                try
+                {
+                    return this.simpleExecute("delete_event_guest.php",
+                            "event_id=" + URLEncoder.encode(params[1], "UTF-8")
+                                    + "&username=" + URLEncoder.encode(params[2], "UTF-8"));
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else if (params[0].equals("add_notification")) {
                 try
                 {
@@ -277,7 +293,7 @@ public class EventDetails extends AppCompatActivity {
             }
             return null;
         }
-        
+
         private String simpleExecute(String file, String urlParams) {
             try
             {
