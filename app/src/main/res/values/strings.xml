@@ -65,13 +65,14 @@
     <string name="join_event">Join Event</string>
     <string name="cancel_attendance">Cancel Attendance</string>
     <string name="delete_event">Delete Event</string>
+    <string name="notify_join_success">You\'ve been added to the guest list!</string>
 
     <string-array name="notifications_array" formatted="false">
-        <item>%s has joined your event "%s."</item>
-        <item>%s is no longer attending your event "%s."</item>
-        <item>%s has made changes to the the event "%s."</item>
-        <item>%s has deleted the event "%s."</item>
-        <item>"%s" starts in 1 hour.</item>
+        <item>%s has joined your event \"%s.\"</item>
+        <item>%s is no longer attending your event \"%s.\"</item>
+        <item>%s has made changes to the the event \"%s.\"</item>
+        <item>%s has deleted the event \"%s.\"</item>
+        <item>\"%s\" starts in 1 hour.</item>
     </string-array>
 	
     <plurals name="minutes_ago">

@@ -143,13 +143,17 @@ public class EventDetails extends AppCompatActivity {
             findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BackgroundTask task = new BackgroundTask();
-                    task.execute("add_notification",
+                    BackgroundTask joinTask = new BackgroundTask();
+                    joinTask.execute("join_event", String.valueOf(eventId),
+                            SaveSharedPreference.getUserName(v.getContext()));
+                    BackgroundTask notificationTask = new BackgroundTask();
+                    notificationTask.execute("add_notification",
                             hostUsername, SaveSharedPreference.getUserName(v.getContext()),
                             Integer.toString(eventId), NOTIFICATION_JOIN_EVENT);
                     try {
-                        if (task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
-                            Toast.makeText(v.getContext(), "Notification sent", Toast.LENGTH_SHORT).show();
+                        if (joinTask.get().equals(BackgroundTask.RESULT_SUCCESS)
+                                && notificationTask.get().equals(BackgroundTask.RESULT_SUCCESS)) {
+                            Toast.makeText(v.getContext(), getResources().getString(R.string.notify_join_success), Toast.LENGTH_SHORT).show();
                             setActionButton(R.id.button_cancel_attendance);
 
                         }
@@ -248,38 +252,52 @@ public class EventDetails extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+            } else if (params[0].equals("join_event")) {
+                try
+                {
+                    return this.simpleExecute("join_event.php",
+                            "event_id=" + URLEncoder.encode(params[1], "UTF-8")
+                                    + "&username=" + URLEncoder.encode(params[2], "UTF-8"));
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else if (params[0].equals("add_notification")) {
                 try
                 {
-                    String urlParams =
+                    return this.simpleExecute("add_notification.php",
                             "user_recipient=" + URLEncoder.encode(params[1], "UTF-8")
-                                    + "&user_sender=" + URLEncoder.encode(params[2], "UTF-8")
-                                    + "&event_id=" + URLEncoder.encode(params[3], "UTF-8")
-                                    + "&message_type=" + URLEncoder.encode(params[4], "UTF-8");
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "add_notification.php").openConnection();
-                    httpURLConnection.setDoOutput(true);
-                    OutputStream os = httpURLConnection.getOutputStream();
-                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                    bufferedWriter.write(urlParams);
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
-                    os.close();
-                    httpURLConnection.getInputStream().close();
-                    httpURLConnection.disconnect();
-
-                    return RESULT_SUCCESS;
+                            + "&user_sender=" + URLEncoder.encode(params[2], "UTF-8")
+                            + "&event_id=" + URLEncoder.encode(params[3], "UTF-8")
+                            + "&message_type=" + URLEncoder.encode(params[4], "UTF-8"));
                 }
-                catch (MalformedURLException e) {
+                catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("Catchexception1", e.toString());
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.d("Catchexception2",e.toString());
-
                 }
             }
+            return null;
+        }
+        
+        private String simpleExecute(String file, String urlParams) {
+            try
+            {
+                HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + file).openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                bufferedWriter.write(urlParams);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                os.close();
+                httpURLConnection.getInputStream().close();
+                httpURLConnection.disconnect();
+
+                return RESULT_SUCCESS;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
 
