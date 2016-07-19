@@ -40,13 +40,6 @@ public class EventDetails extends AppCompatActivity {
         int eventId = getIntent().getIntExtra("event_id", 0);
         this.fetchBasicData(eventId);
 
-        findViewById(R.id.hostIcon).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EventDetails.this, ProfileActivity.class));
-            }
-        });
-
         findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +110,16 @@ public class EventDetails extends AppCompatActivity {
             Picasso.with(this).load(
                     LocalSettings.Base_URL + "./image/" + host.getString("image"))
                     .into((ImageView) findViewById(R.id.hostIcon));
+
+            final String hostUsername = event.getString("host_username");
+            findViewById(R.id.hostInfo).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(EventDetails.this, ProfileActivity.class);
+                    intent.putExtra("username", hostUsername);
+                    startActivity(intent);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

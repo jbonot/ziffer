@@ -48,8 +48,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         String data="",firstName="",lastName="",dob="",german_level="",description="",Qrimage="",image_url="";
-        MainActivity activity = (MainActivity) getActivity();
-         user_name = activity.getMyData();
+         user_name = getActivity().getIntent().getStringExtra("username") == null ?
+            SaveSharedPreference.getUserName(getActivity())
+                 : getActivity().getIntent().getStringExtra("username");
         Bitmap bmp=null;
 
         BackgroundTask2 backgroundTask = new BackgroundTask2(getActivity());
