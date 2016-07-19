@@ -29,6 +29,9 @@ import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
 public class EventDetails extends AppCompatActivity {
+    private static final String NOTIFICATION_JOIN_EVENT = "0";
+    private static final String NOTIFICATION_CANCEL_EVENT_ATTENDANCE = "1";
+    private static final String NOTIFICATION_DELETE_EVENT = "3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,16 +105,26 @@ public class EventDetails extends AppCompatActivity {
                 }
             });
 
+            if (hostUsername.equals(SaveSharedPreference.getUserName(this))) {
+                this.setActionButton(R.id.button_delete);
+            } else {
+                // TODO: Check if the event is full
+                // TODO: Check if the user has already joined the event or not
+                this.setActionButton(R.id.button_join);
+            }
+
             findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BackgroundTask task = new BackgroundTask();
                     task.execute("add_notification",
                             hostUsername, SaveSharedPreference.getUserName(v.getContext()),
-                            Integer.toString(eventId), Integer.toString(0));
+                            Integer.toString(eventId), NOTIFICATION_JOIN_EVENT);
                     try {
                         if (task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
                             Toast.makeText(v.getContext(), "Notification sent", Toast.LENGTH_SHORT).show();
+                            setActionButton(R.id.button_cancel_attendance);
+
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -120,8 +133,62 @@ public class EventDetails extends AppCompatActivity {
                     }
                 }
             });
+
+            findViewById(R.id.button_cancel_attendance).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BackgroundTask task = new BackgroundTask();
+                    task.execute("add_notification",
+                            hostUsername, SaveSharedPreference.getUserName(v.getContext()),
+                            Integer.toString(eventId), NOTIFICATION_CANCEL_EVENT_ATTENDANCE);
+                    try {
+                        if (task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
+                            Toast.makeText(v.getContext(), "Notification sent", Toast.LENGTH_SHORT).show();
+                            setActionButton(R.id.button_join);
+
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            findViewById(R.id.button_delete).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: Send notification to all guests
+                    // TODO: Delete event
+                    finish();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setActionButton(int id) {
+        switch (id) {
+            case R.id.button_join:
+                findViewById(R.id.button_join).setVisibility(View.VISIBLE);
+                findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
+                findViewById(R.id.button_delete).setVisibility(View.GONE);
+                break;
+            case R.id.button_cancel_attendance:
+                findViewById(R.id.button_join).setVisibility(View.GONE);
+                findViewById(R.id.button_cancel_attendance).setVisibility(View.VISIBLE);
+                findViewById(R.id.button_delete).setVisibility(View.GONE);
+                break;
+            case R.id.button_delete:
+                findViewById(R.id.button_join).setVisibility(View.GONE);
+                findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
+                findViewById(R.id.button_delete).setVisibility(View.VISIBLE);
+                break;
+            default:
+                findViewById(R.id.button_join).setVisibility(View.GONE);
+                findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
+                findViewById(R.id.button_delete).setVisibility(View.GONE);
         }
     }
 

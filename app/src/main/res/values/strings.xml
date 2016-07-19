@@ -62,6 +62,10 @@
     <string name="select_photo">Select photo</string>
 	<string name="moments_ago">Moments ago</string>
 
+    <string name="join_event">Join Event</string>
+    <string name="cancel_attendance">Cancel Attendance</string>
+    <string name="delete_event">Delete Event</string>
+
     <string-array name="notifications_array" formatted="false">
         <item>%s has joined your event "%s."</item>
         <item>%s is no longer attending your event "%s."</item>
