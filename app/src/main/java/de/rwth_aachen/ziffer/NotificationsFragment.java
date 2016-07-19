@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +59,8 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), EventDetails.class);
+                intent.putExtra("event_id",Integer.parseInt(
+                        ((TextView)view.findViewById(R.id.event_id)).getText().toString()));
                 startActivity(intent);
             }
         });
@@ -110,6 +113,7 @@ public class NotificationsFragment extends Fragment {
                 String formatString = getResources().getStringArray(R.array.notifications_array)[notification.getInt("message_type")];
                 String senderName = notification.getString("sender_firstname") + " " + notification.getString("sender_lastname");
                 NotificationListItem item = new NotificationListItem(String.format(formatString, senderName, notification.getString("event_name")), timeDifferenceStr);
+                item.setEventId(notification.getInt("event_id"));
 
                 if (notification.getInt("read_status") == 1) {
                     item.setIsRead(true);

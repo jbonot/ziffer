@@ -30,6 +30,8 @@ public class NotificationListAdapter extends ArrayAdapter<NotificationListItem> 
                 .setText(this.values[position].getMessage());
         ((TextView)rowView.findViewById(R.id.date))
                 .setText(this.values[position].getTimestamp());
+        ((TextView)rowView.findViewById(R.id.event_id))
+                .setText(String.valueOf(this.values[position].getEventId()));
 
         if (this.values[position].getImageFile() != null &&
                 !this.values[position].getImageFile().isEmpty()) {
