@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -98,6 +101,22 @@ public class EventDetails extends AppCompatActivity {
                 ((TextView)findViewById(R.id.address)).setText(
                         location.getString("name") + ", " + location.getString("address"));
             }
+
+            BackgroundTask hostTask = new BackgroundTask();
+            hostTask.execute("get_host_info", event.getString("host_username"));
+            String hostData = hostTask.get();
+            if (new JSONObject(hostData).getJSONArray("host_info").length() == 0) {
+                return;
+            }
+
+            JSONObject host = new JSONObject(new JSONObject(hostData).getJSONArray("host_info").getString(0));
+            ((TextView)findViewById(R.id.hostName)).setText(
+                    String.format(getResources().getString(R.string.hosted_by),
+                            host.getString("first_name"), host.getString("last_name")));
+            ((TextView)findViewById(R.id.hostGermanLevel)).setText(host.getString("german_level"));
+            Picasso.with(this).load(
+                    LocalSettings.Base_URL + "./image/" + host.getString("image"))
+                    .into((ImageView) findViewById(R.id.hostIcon));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,6 +136,12 @@ public class EventDetails extends AppCompatActivity {
             } else if (params[0].equals("get_location")) {
                 try {
                     return this.fetch("get_location.php", "location_id=" + URLEncoder.encode(params[1], "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            } else if (params[0].equals("get_host_info")) {
+                try {
+                    return this.fetch("get_host_info.php", "username=" + URLEncoder.encode(params[1], "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
