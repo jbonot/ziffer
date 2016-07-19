@@ -26,6 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class EventDetails extends AppCompatActivity {
@@ -105,12 +107,37 @@ public class EventDetails extends AppCompatActivity {
                 }
             });
 
+            BackgroundTask guestTask = new BackgroundTask();
+            guestTask.execute("get_event_guests", String.valueOf(eventId));
+            List<GuestListItem> guests = new ArrayList<>();
+            JSONArray jsonGuestList = new JSONObject(guestTask.get()).getJSONArray("event_guests");
+            for (int i = 0; i < jsonGuestList.length(); i++) {
+                JSONObject jsonGuest = new JSONObject(jsonGuestList.getString(i));
+                GuestListItem guest = new GuestListItem();
+                guest.setUsername(jsonGuest.getString("username"));
+                guest.setFirstName(jsonGuest.getString("first_name"));
+                guest.setLastName(jsonGuest.getString("last_name"));
+                guest.setGermanLevel(jsonGuest.getString("german_level"));
+                guest.setImageFile(jsonGuest.getString("image"));
+                guests.add(guest);
+            }
+
             if (hostUsername.equals(SaveSharedPreference.getUserName(this))) {
                 this.setActionButton(R.id.button_delete);
             } else {
-                // TODO: Check if the event is full
-                // TODO: Check if the user has already joined the event or not
-                this.setActionButton(R.id.button_join);
+                if (guests.size() < event.getInt("max_attendees")) {
+                    int button = R.id.button_join;
+                    for (GuestListItem guest : guests) {
+                        if (SaveSharedPreference.getUserName(this).equals(guest.getUsername())) {
+                            button = R.id.button_cancel_attendance;
+                            break;
+                        }
+                    }
+
+                    this.setActionButton(button);
+                } else {
+                    this.setActionButton(-1);
+                }
             }
 
             findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
@@ -212,6 +239,12 @@ public class EventDetails extends AppCompatActivity {
             } else if (params[0].equals("get_host_info")) {
                 try {
                     return this.fetch("get_host_info.php", "username=" + URLEncoder.encode(params[1], "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            } else if (params[0].equals("get_event_guests")) {
+                try {
+                    return this.fetch("get_event_guests.php", "event_id=" + URLEncoder.encode(params[1], "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
