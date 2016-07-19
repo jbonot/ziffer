@@ -66,20 +66,36 @@ public class EventDetails extends AppCompatActivity {
     private void fetchBasicData(int eventId){
         BackgroundTask task = new BackgroundTask();
         task.execute("get_event", String.valueOf(eventId));
-
         try {
             String data = task.get();
             JSONArray arr = new JSONObject(data).getJSONArray("event");
-            if (arr.length() > 0) {
-                JSONObject event = new JSONObject(arr.getString(0));
-                ((TextView)findViewById(R.id.eventName)).setText(event.getString("title"));
-                ((TextView)findViewById(R.id.germanLevel)).setText(event.getString("german_level"));
-                ((TextView)findViewById(R.id.time)).setText(
-                        String.format(getResources().getString(R.string.date_from_to),
-                                event.getString("date"),
-                                event.getString("start_time"),
-                                event.getString("end_time")));
-                ((TextView)findViewById(R.id.description)).setText(event.getString("description"));
+            if (arr.length() == 0) {
+                return;
+            }
+
+            JSONObject event = new JSONObject(arr.getString(0));
+            ((TextView)findViewById(R.id.eventName)).setText(event.getString("title"));
+            ((TextView)findViewById(R.id.germanLevel)).setText(event.getString("german_level"));
+            ((TextView)findViewById(R.id.time)).setText(
+                    String.format(getResources().getString(R.string.date_from_to),
+                            event.getString("date"),
+                            event.getString("start_time"),
+                            event.getString("end_time")));
+            ((TextView)findViewById(R.id.description)).setText(event.getString("description"));
+
+            BackgroundTask locationTask = new BackgroundTask();
+            locationTask.execute("get_location", event.getString("location_id"));
+            String locationData = locationTask.get();
+            if (new JSONObject(locationData).getJSONArray("location").length() == 0) {
+                return;
+            }
+
+            JSONObject location = new JSONObject(new JSONObject(locationData).getJSONArray("location").getString(0));
+            if (location.getString("address").contains(location.getString("name"))) {
+                ((TextView)findViewById(R.id.address)).setText(location.getString("address"));
+            } else {
+                ((TextView)findViewById(R.id.address)).setText(
+                        location.getString("name") + ", " + location.getString("address"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,6 +128,34 @@ public class EventDetails extends AppCompatActivity {
                     is.close();
 
                     Log.d("ZIFFER_event", data);
+                    httpURLConnection.disconnect();
+                    return data;
+                }
+                catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (params[0].equals("get_location")) {
+                try
+                {
+                    String urlParams = "location_id=" + URLEncoder.encode(params[1], "UTF-8");
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + "get_location.php").openConnection();
+                    httpURLConnection.setDoOutput(true);
+                    OutputStream os = httpURLConnection.getOutputStream();
+                    os.write(urlParams.getBytes());
+                    os.flush();
+                    os.close();
+
+                    int tmp;
+                    String data = "";
+                    InputStream is = httpURLConnection.getInputStream();
+                    while((tmp = is.read())!= -1){
+                        data += (char)tmp;
+                    }
+
+                    is.close();
+
                     httpURLConnection.disconnect();
                     return data;
                 }
