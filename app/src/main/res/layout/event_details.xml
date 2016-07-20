@@ -198,7 +198,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:background="@drawable/button_dark"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -209,7 +213,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:textColor="@color/accent_material_light"
+                android:background="@drawable/button_light"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -220,7 +228,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:background="@drawable/button_dark"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" />
 
     </LinearLayout>
     </ScrollView>
