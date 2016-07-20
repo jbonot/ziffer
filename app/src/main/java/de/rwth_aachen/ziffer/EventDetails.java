@@ -109,8 +109,10 @@ public class EventDetails extends AppCompatActivity {
 
             BackgroundTask guestTask = new BackgroundTask();
             guestTask.execute("get_event_guests", String.valueOf(eventId));
+            final String guestListJson = guestTask.get();
+
             List<GuestListItem> guests = new ArrayList<>();
-            JSONArray jsonGuestList = new JSONObject(guestTask.get()).getJSONArray("event_guests");
+            JSONArray jsonGuestList = new JSONObject(guestListJson).getJSONArray("event_guests");
             for (int i = 0; i < jsonGuestList.length(); i++) {
                 JSONObject jsonGuest = new JSONObject(jsonGuestList.getString(i));
                 GuestListItem guest = new GuestListItem();
@@ -124,6 +126,16 @@ public class EventDetails extends AppCompatActivity {
 
             if (hostUsername.equals(SaveSharedPreference.getUserName(this))) {
                 this.setActionButton(R.id.button_delete);
+                findViewById(R.id.button_guests).setVisibility(View.VISIBLE);
+                findViewById(R.id.button_guests).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), GuestListActivity.class);
+                        intent.putExtra("guest_list", guestListJson);
+                        startActivity(intent);
+                    }
+                });
+
             } else {
                 if (guests.size() < event.getInt("max_attendees")) {
                     int button = R.id.button_join;

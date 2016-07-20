@@ -12,21 +12,19 @@
         android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:id="@+id/scrollView3"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/relativeLayout">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="16dp"
-        tools:context="de.rwth_aachen.ziffer.EventDetails"
-            android:background="#cce1e9">
+        tools:context="de.rwth_aachen.ziffer.EventDetails">
 
             <LinearLayout
             android:orientation="vertical"
@@ -157,57 +155,55 @@
                 android:background="@android:color/white" />
 
         </LinearLayout>
+            <TextView
+                android:layout_width="430dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="2 of 8 available spots left"
+                android:id="@+id/availability"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_guest_list"
+                android:id="@+id/button_guests"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_event"
+                android:id="@+id/button_delete"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_attendance"
+                android:id="@+id/button_cancel_attendance"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/join_event"
+                android:id="@+id/button_join"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
 
     </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="#a3d0e1"
-        android:id="@+id/relativeLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="2 of 8 available spots left"
-            android:id="@+id/availability"
-            android:layout_marginTop="10dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_event"
-            android:id="@+id/button_delete"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_attendance"
-            android:id="@+id/button_cancel_attendance"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/join_event"
-            android:id="@+id/button_join"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone" />
-
-    </RelativeLayout>
 </RelativeLayout>

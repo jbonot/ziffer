@@ -52,6 +52,7 @@
     <string name="c1_advanced">C1 - Advanced</string>
     <string name="date_from_to" formatted="false">%s at %s - %s</string>
     <string name="hosted_by" formatted="false">Hosted by %s %s</string>
+    <string name="guest_list">Guest List</string>
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -65,6 +66,7 @@
     <string name="join_event">Join Event</string>
     <string name="cancel_attendance">Cancel Attendance</string>
     <string name="delete_event">Delete Event</string>
+    <string name="view_guest_list">View Guest List</string>
     <string name="notify_join_success">You\'ve been added to the guest list!</string>
     <string name="notify_remove_guest_success">You\'ve been removed from the guest list</string>
 
