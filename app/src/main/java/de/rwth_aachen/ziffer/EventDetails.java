@@ -1,11 +1,9 @@
 package de.rwth_aachen.ziffer;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +66,7 @@ public class EventDetails extends AppCompatActivity {
         if (item.getItemId() == R.id.action_delete) {
 
             for (GuestListItem guest : this.guests) {
-                BackgroundTask notify = new BackgroundTask();
+                BackgroundTaskEventDetails notify = new BackgroundTaskEventDetails();
                 notify.execute("add_notification", guest.getUsername(),
                         SaveSharedPreference.getUserName(this),
                         String.valueOf(this.eventId),
@@ -84,7 +82,7 @@ public class EventDetails extends AppCompatActivity {
     }
 
     private void fetchBasicData(){
-        BackgroundTask task = new BackgroundTask();
+        BackgroundTaskEventDetails task = new BackgroundTaskEventDetails();
         task.execute("get_event", String.valueOf(eventId));
         try {
             String data = task.get();
@@ -103,7 +101,7 @@ public class EventDetails extends AppCompatActivity {
                             event.getString("end_time")));
             ((TextView)findViewById(R.id.description)).setText(event.getString("description"));
 
-            BackgroundTask locationTask = new BackgroundTask();
+            BackgroundTaskEventDetails locationTask = new BackgroundTaskEventDetails();
             locationTask.execute("get_location", event.getString("location_id"));
             String locationData = locationTask.get();
             if (new JSONObject(locationData).getJSONArray("location").length() == 0) {
@@ -118,7 +116,7 @@ public class EventDetails extends AppCompatActivity {
                         location.getString("name") + ", " + location.getString("address"));
             }
 
-            BackgroundTask hostTask = new BackgroundTask();
+            BackgroundTaskEventDetails hostTask = new BackgroundTaskEventDetails();
             hostTask.execute("get_host_info", event.getString("host_username"));
             String hostData = hostTask.get();
             if (new JSONObject(hostData).getJSONArray("host_info").length() == 0) {
@@ -144,7 +142,7 @@ public class EventDetails extends AppCompatActivity {
                 }
             });
 
-            BackgroundTask guestTask = new BackgroundTask();
+            BackgroundTaskEventDetails guestTask = new BackgroundTaskEventDetails();
             guestTask.execute("get_event_guests", String.valueOf(eventId));
             final String guestListJson = guestTask.get();
 
@@ -191,16 +189,16 @@ public class EventDetails extends AppCompatActivity {
             findViewById(R.id.button_join).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BackgroundTask joinTask = new BackgroundTask();
+                    BackgroundTaskEventDetails joinTask = new BackgroundTaskEventDetails();
                     joinTask.execute("join_event", String.valueOf(eventId),
                             SaveSharedPreference.getUserName(v.getContext()));
-                    BackgroundTask notificationTask = new BackgroundTask();
+                    BackgroundTaskEventDetails notificationTask = new BackgroundTaskEventDetails();
                     notificationTask.execute("add_notification",
                             hostUsername, SaveSharedPreference.getUserName(v.getContext()),
                             Integer.toString(eventId), NOTIFICATION_JOIN_EVENT);
                     try {
-                        if (joinTask.get().equals(BackgroundTask.RESULT_SUCCESS)
-                                && notificationTask.get().equals(BackgroundTask.RESULT_SUCCESS)) {
+                        if (joinTask.get().equals(BackgroundTaskEventDetails.RESULT_SUCCESS)
+                                && notificationTask.get().equals(BackgroundTaskEventDetails.RESULT_SUCCESS)) {
                             Toast.makeText(v.getContext(), getResources().getString(R.string.notify_join_success), Toast.LENGTH_SHORT).show();
                             setActionButton(R.id.button_cancel_attendance);
 
@@ -216,16 +214,16 @@ public class EventDetails extends AppCompatActivity {
             findViewById(R.id.button_cancel_attendance).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BackgroundTask cancelTask = new BackgroundTask();
+                    BackgroundTaskEventDetails cancelTask = new BackgroundTaskEventDetails();
                     cancelTask.execute("delete_event_guest", Integer.toString(eventId),
                             SaveSharedPreference.getUserName(v.getContext()));
-                    BackgroundTask task = new BackgroundTask();
+                    BackgroundTaskEventDetails task = new BackgroundTaskEventDetails();
                     task.execute("add_notification",
                             hostUsername, SaveSharedPreference.getUserName(v.getContext()),
                             Integer.toString(eventId), NOTIFICATION_CANCEL_EVENT_ATTENDANCE);
                     try {
-                        if (cancelTask.get().equals(BackgroundTask.RESULT_SUCCESS)
-                                && task.get().equals(BackgroundTask.RESULT_SUCCESS)) {
+                        if (cancelTask.get().equals(BackgroundTaskEventDetails.RESULT_SUCCESS)
+                                && task.get().equals(BackgroundTaskEventDetails.RESULT_SUCCESS)) {
                             Toast.makeText(v.getContext(),
                                     getResources().getString(R.string.notify_remove_guest_success),
                                     Toast.LENGTH_SHORT).show();
@@ -256,125 +254,6 @@ public class EventDetails extends AppCompatActivity {
             default:
                 findViewById(R.id.button_join).setVisibility(View.GONE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
-        }
-    }
-
-    private class BackgroundTask extends AsyncTask<String,Void,String> {
-        public static final String RESULT_SUCCESS = "RESULT_SUCCESS";
-
-        @Override
-        protected String doInBackground(String... params) {
-            if (params[0].equals("get_event")) {
-                try {
-                    return this.fetch("get_event.php", "event_id=" + URLEncoder.encode(params[1], "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            } else if (params[0].equals("get_location")) {
-                try {
-                    return this.fetch("get_location.php", "location_id=" + URLEncoder.encode(params[1], "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            } else if (params[0].equals("get_host_info")) {
-                try {
-                    return this.fetch("get_host_info.php", "username=" + URLEncoder.encode(params[1], "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            } else if (params[0].equals("get_event_guests")) {
-                try {
-                    return this.fetch("get_event_guests.php", "event_id=" + URLEncoder.encode(params[1], "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            } else if (params[0].equals("join_event")) {
-                try
-                {
-                    return this.simpleExecute("join_event.php",
-                            "event_id=" + URLEncoder.encode(params[1], "UTF-8")
-                                    + "&username=" + URLEncoder.encode(params[2], "UTF-8"));
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (params[0].equals("delete_event_guest")) {
-
-                try
-                {
-                    return this.simpleExecute("delete_event_guest.php",
-                            "event_id=" + URLEncoder.encode(params[1], "UTF-8")
-                                    + "&username=" + URLEncoder.encode(params[2], "UTF-8"));
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (params[0].equals("add_notification")) {
-                try
-                {
-                    return this.simpleExecute("add_notification.php",
-                            "user_recipient=" + URLEncoder.encode(params[1], "UTF-8")
-                            + "&user_sender=" + URLEncoder.encode(params[2], "UTF-8")
-                            + "&event_id=" + URLEncoder.encode(params[3], "UTF-8")
-                            + "&message_type=" + URLEncoder.encode(params[4], "UTF-8"));
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        private String simpleExecute(String file, String urlParams) {
-            try
-            {
-                HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + file).openConnection();
-                httpURLConnection.setDoOutput(true);
-                OutputStream os = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                bufferedWriter.write(urlParams);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                os.close();
-                httpURLConnection.getInputStream().close();
-                httpURLConnection.disconnect();
-
-                return RESULT_SUCCESS;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        private String fetch(String file, String urlParams) {
-            try
-            {
-                HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(LocalSettings.Base_URL + file).openConnection();
-                httpURLConnection.setDoOutput(true);
-                OutputStream os = httpURLConnection.getOutputStream();
-                os.write(urlParams.getBytes());
-                os.flush();
-                os.close();
-
-                int tmp;
-                String data = "";
-                InputStream is = httpURLConnection.getInputStream();
-                while((tmp = is.read())!= -1){
-                    data += (char)tmp;
-                }
-
-                is.close();
-
-                httpURLConnection.disconnect();
-                return data;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
         }
     }
 }
