@@ -11,12 +11,13 @@
     <!-- Filter Events -->
     <item android:id="@+id/action_filter" android:title="@string/action_filter"
         android:icon="@android:drawable/ic_dialog_dialer"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:visible="false" />
 
     <item android:id="@+id/action_set_en"
-        android:title="English" app:showAsAction="ifRoom" />
+        android:title="English" app:showAsAction="never" />
     <item android:id="@+id/action_set_de"
-        android:title="Deutsch" app:showAsAction="ifRoom" />
+        android:title="Deutsch" app:showAsAction="never" />
     <item android:id="@+id/action_logout"
-        android:title="Log Out" app:showAsAction="ifRoom" />
+        android:title="Log Out" app:showAsAction="never" />
 </menu>
