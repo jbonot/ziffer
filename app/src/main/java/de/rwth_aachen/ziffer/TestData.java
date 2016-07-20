@@ -20,8 +20,9 @@ public class TestData {
         this.data_event = data_event;
     }
 
-
-
+    public String getData_event() {
+        return data_event;
+    }
 
     /**
      * Creates an adapter for the event list with sample data.
@@ -39,6 +40,7 @@ public class TestData {
             jsonArray= root.getJSONArray("event_data");
             int count=0;
             String german_level_event,title,name,address;
+                    int event_id;
            while(count<jsonArray.length())
            {
                JSONObject JO= jsonArray.getJSONObject(count);
@@ -46,8 +48,9 @@ public class TestData {
                title=JO.getString("title");
                name=JO.getString("name");
                address=JO.getString("address");
+               event_id=JO.getInt("event_id");
 
-               e.add(new EventListItem(german_level_event, title, name + " " + address));
+               e.add(new EventListItem(german_level_event, title, name + " " + address,event_id));
                 count++;
            }
 

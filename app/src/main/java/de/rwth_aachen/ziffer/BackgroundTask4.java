@@ -26,36 +26,36 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class BackgroundTask2 extends AsyncTask<String,Void,String> {
+public class BackgroundTask4 extends AsyncTask<String,Void,String> {
     AlertDialog alertDialog;
     Context ctx;
-    BackgroundTask2(Context context)
+    BackgroundTask4(Context context)
     {
         this.ctx =context;
     }
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("My Profile..");
+        alertDialog.setTitle("Event Details..");
     }
     @Override
     protected String doInBackground(String... params) {
 
-        String myprofile_url = LocalSettings.Base_URL + "myprofile.php";
+        String eventdetails_url = LocalSettings.Base_URL + "eventdetails.php";
         String method=params[0];
 
 
-        if(method.equals("myprofile"))
+        if(method.equals("eventdetails"))
         {
             int tmp;
-            String user_name = params[1];
+            String event_id = params[1];
 
-            Log.d("profiledata",user_name);
+            Log.d("eventdetails",event_id);
 
             String data="";
             try {
-                URL url = new URL(myprofile_url);
-                String urlParams = "user_name="+user_name;
+                URL url = new URL(eventdetails_url);
+                String urlParams = "event_id="+event_id;
                 Log.d("urlParams",urlParams);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -71,10 +71,11 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
 
                 is.close();
                 httpURLConnection.disconnect();
-                Log.d("ProfileSelectData",data);
-                if(data.indexOf("profile_data_id") >=0)
-                { Log.d("ReturnData",data);
-                    return data; }
+                Log.d("EventSelectData",data);
+                if(data.contains("german_level_event"))
+                {
+                    return data;
+                }
                 else
                     return "";
             } catch (MalformedURLException e) {

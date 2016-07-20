@@ -37,13 +37,7 @@ import java.util.regex.Pattern;
  */
 public class ProfileFragment extends Fragment {
     private  String user_name,data_event="";
-
-
-
-
-
-
-    @Override
+  @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -54,11 +48,12 @@ public class ProfileFragment extends Fragment {
         Bitmap bmp=null;
 
         BackgroundTask2 backgroundTask = new BackgroundTask2(getActivity());
-        backgroundTask.execute("myprofile",user_name);
+        backgroundTask.execute("myprofile",SaveSharedPreference.getUserName(getActivity()));
 
 
         //getting JSON for profile
-        try {
+        try
+        {
 
             data = backgroundTask.get().toString();
             Log.d("datafromprofile",data);
@@ -87,11 +82,8 @@ public class ProfileFragment extends Fragment {
         //    URL url = new URL(image_url);
             Log.d("image_url",image_url);
 
-
             Log.d("checkdob",dob);
-
-
-        }
+     }
         catch (JSONException e)
         {
             Log.d("JSONexception",e.toString());
@@ -128,17 +120,14 @@ public class ProfileFragment extends Fragment {
        // imageview.setImageBitmap(bmp);
 
     return view;
-      //  return inflater.inflate(R.layout.profile_fragment, container, false);
-
-    }
+   }
 
     @Override
          public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
 
-
         BackgroundTask3 backgroundTask3 = new BackgroundTask3(getActivity());
-        backgroundTask3.execute("myevent",user_name);
+        backgroundTask3.execute("myevent",SaveSharedPreference.getUserName(getActivity()));
         //getting JSON for events
         try {
             data_event = backgroundTask3.get().toString();
@@ -153,13 +142,26 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
           //older code here
-        ListView listView = (ListView)view.findViewById(R.id.listView);
+        final ListView listView = (ListView)view.findViewById(R.id.listView);
         listView.setAdapter(new TestData(data_event).getEventListAdapter(getActivity()));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               //new code
+                EventListItem eventdetails = (EventListItem) parent.getItemAtPosition(position);
+
+                String level= eventdetails.getLevel();
+                String headline=eventdetails.getHeadline();
+                String address=eventdetails.getDescription();
+                int Event_id=eventdetails.getEvent_id();
                 Intent intent = new Intent(getActivity(), EventDetails.class);
-                intent.putExtra("data_event",data_event);
+
+
+                intent.putExtra("level",level);
+                intent.putExtra("headline",headline);
+                intent.putExtra("address",address);
+                intent.putExtra("Event_id_ProfileFragment",Event_id);
+
                 startActivity(intent);
             }
         });
