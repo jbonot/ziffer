@@ -1,11 +1,9 @@
 <?php
-$db_name="webappdb_new";
+$db_name="webappdb";
 $mysql_user="root";
 $mysql_pass="admin";
 $server_name="localhost";
-$user_name_host=$_POST["user_name"];
-
-
+$user_name_host = !empty($_POST['user_name']) ? $_POST['user_name'] : '';
 // Create connection
 $con = mysqli_connect($server_name,$mysql_user,$mysql_pass,$db_name);
 // Check connection
@@ -22,7 +20,8 @@ e.min_attendees,
 e.max_attendees,
 e.description,
 l.name,
-l.address
+l.address,
+e.event_id
 FROM `event` AS e
 JOIN 
 `event_locations` AS l
@@ -36,17 +35,6 @@ $result = mysqli_query($con, $sql);
 $response = array();
  
 while($row = mysqli_fetch_array($result)){
-/* echo $row[0]."<br>";
- echo $row[1]."<br>";
- echo $row[2]."<br>";
- echo $row[3]."<br>";
- echo $row[4]."<br>";
- echo $row[5]."<br>";
- echo $row[6]."<br>";
- echo $row[7]."<br>";
- echo $row[8]."<br>";
- echo $row[9]."<br>";
- */
  
  array_push($response,array(
    'german_level_event' => $row[0],
@@ -58,7 +46,8 @@ while($row = mysqli_fetch_array($result)){
    'max_attendees' => $row[6],
   'description' => $row[7],
    'name' => $row[8],
-   'address' => $row[9]));
+   'address' => $row[9],
+   'event_id' => $row[10]));
    
 }
 

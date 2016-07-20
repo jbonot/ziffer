@@ -21,12 +21,15 @@ import com.squareup.picasso.Picasso;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.Years;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,14 +155,43 @@ public class ProfileFragment extends Fragment {
 
             e.printStackTrace();
         }
+        JSONArray jsonArray;
+        ArrayList<EventListItem> e = new ArrayList<EventListItem>();
+        try
+        {
+
+            JSONObject root = new JSONObject(data_event);
+            jsonArray= root.getJSONArray("event_data");
+            int count=0;
+            while(count<jsonArray.length())
+            {
+                JSONObject JO= jsonArray.getJSONObject(count);
+                EventListItem event = new EventListItem();
+                event.setId(JO.getInt("event_id"));
+                event.setLevel(JO.getString("german_level_event"));
+                event.setHeadline(JO.getString("title"));
+                event.setDescription(JO.getString("name") + " " + JO.getString("address"));
+
+                e.add(event);
+                count++;
+            }
+
+        }
+        catch (JSONException e1)
+        {
+            Log.d("JSONexception",e1.toString());
+            e1.printStackTrace();
+        }
+
           //older code here
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listView.setAdapter(new TestData(data_event).getEventListAdapter(getActivity()));
+        listView.setAdapter(new EventListAdapter(getActivity(), e.toArray(new EventListItem[0])));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), EventDetails.class);
-                intent.putExtra("data_event",data_event);
+                intent.putExtra("event_id",Integer.valueOf(
+                        ((TextView) view.findViewById(R.id.event_id)).getText().toString()));
                 startActivity(intent);
             }
         });
