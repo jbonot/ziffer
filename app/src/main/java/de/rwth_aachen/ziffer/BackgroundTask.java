@@ -328,7 +328,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             Intent i = new Intent(ctx,MainActivity.class);
             i.putExtra("user_name",user_name);
             ctx.startActivity(i);
-            Toast.makeText(ctx, "Welcome " + user_name , Toast.LENGTH_LONG).show();
 
         }
         else if(result.equals("Please Enter correct credentials!!!"))

@@ -78,7 +78,12 @@
         <item>%s has deleted the event \"%s.\"</item>
         <item>\"%s\" starts in 1 hour.</item>
     </string-array>
-	
+
+    <plurals name="new_notifications">
+        <item quantity="one">You have %d new notification</item>
+        <item quantity="other">You have %d new notifications</item>
+    </plurals>
+
     <plurals name="minutes_ago">
         <item quantity="one">%d minute ago</item>
         <item quantity="other">%d minutes ago</item>

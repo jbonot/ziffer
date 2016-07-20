@@ -151,7 +151,11 @@ public class MainActivity extends AppCompatActivity  {
         task.execute("check_new_notifications", SaveSharedPreference.getUserName(this));
         try {
             int notifications = Integer.parseInt(task.get());
-            Toast.makeText(this, String.format("You have %d notifications", notifications), Toast.LENGTH_LONG).show();
+            if (notifications > 0) {
+                Toast.makeText(this,
+                        getResources().getQuantityString(R.plurals.new_notifications,
+                                notifications, notifications), Toast.LENGTH_LONG).show();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
