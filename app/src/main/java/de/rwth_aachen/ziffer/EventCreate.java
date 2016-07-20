@@ -78,8 +78,6 @@ public class EventCreate extends AppCompatActivity {
             }
         });
 
-        ((TextView)findViewById(R.id.duration)).setText(getResources().getString(R.string.duration_1hr));
-
         TextView dateStart = (TextView)findViewById(R.id.dateStart);
         dateStart.setText(new SimpleDateFormat(
                 getResources().getConfiguration().locale.getLanguage().equals("de")
@@ -122,7 +120,6 @@ public class EventCreate extends AppCompatActivity {
         categories.add("30");
 
         this.setupSpinner((Spinner) findViewById(R.id.maxAttendees), categories);
-        this.setupSpinner((Spinner) findViewById(R.id.minAttendees), categories);
 
         findViewById(R.id.editText2).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -149,7 +146,6 @@ public class EventCreate extends AppCompatActivity {
         TextView dateStart = (TextView) findViewById(R.id.dateStart);
         TextView timeStart = (TextView) findViewById(R.id.timeStart);
         TextView timeEnd = (TextView) findViewById(R.id.timeEnd);
-        Spinner minAttendees = (Spinner) findViewById(R.id.minAttendees);
         Spinner maxAttendees = (Spinner) findViewById(R.id.maxAttendees);
         EditText description = (EditText) findViewById(R.id.description);
 
@@ -164,7 +160,7 @@ public class EventCreate extends AppCompatActivity {
             dStart = dateStart.getText().toString();
             tStart = timeStart.getText().toString();
             tEnd = timeEnd.getText().toString();
-            miAttendees = String.valueOf(minAttendees.getSelectedItem());
+            miAttendees = String.valueOf(0);
             maAttendees = String.valueOf(maxAttendees.getSelectedItem());
             descr = description.getText().toString();
 
