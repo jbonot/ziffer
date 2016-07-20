@@ -53,6 +53,7 @@
     <string name="date_from_to" formatted="false">%s at %s - %s</string>
     <string name="hosted_by" formatted="false">Hosted by %s %s</string>
     <string name="guest_list">Guest List</string>
+    <string name="details">Event Details</string>
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>

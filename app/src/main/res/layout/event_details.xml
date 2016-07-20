@@ -32,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:id="@+id/header">
+            android:id="@+id/header"
+                android:background="?attr/colorAccent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,7 +41,9 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Deutsch A1 Tutor Session"
                 android:id="@+id/eventName"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -49,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp"
-                android:background="@android:color/white"
+                android:background="@drawable/background_border"
                 android:layout_below="@+id/header"
                 android:id="@+id/hostInfo">
 
@@ -87,13 +90,25 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/details"
+                android:id="@+id/textView2"
+                android:textColor="@color/accent_material_light"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp" />
+
             <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-                android:layout_margin="16dp"
-                android:background="@android:color/white">
+                android:background="@drawable/background_border"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -145,7 +160,16 @@
             android:padding="16dp"
             android:layout_below="@+id/hostInfo">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/description"
+                    android:id="@+id/textView3"
+                    android:textColor="@color/accent_material_light"
+                    android:textStyle="bold" />
+
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -153,7 +177,7 @@
                 android:id="@+id/description"
                 android:minHeight="100dp"
                 android:padding="16dp"
-                android:background="@android:color/white" />
+                android:background="@drawable/background_border" />
 
         </LinearLayout>
             <TextView
