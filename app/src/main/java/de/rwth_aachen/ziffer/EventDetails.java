@@ -83,7 +83,9 @@ public class EventDetails extends AppCompatActivity {
 
             JSONObject event = new JSONObject(arr.getString(0));
             ((TextView)findViewById(R.id.eventName)).setText(event.getString("title"));
-            ((TextView)findViewById(R.id.germanLevel)).setText(event.getString("german_level"));
+            ((TextView)findViewById(R.id.germanLevel)).setText(
+                    getResources().getString(R.string.german_level) + " "
+                            + event.getString("german_level"));
             ((TextView)findViewById(R.id.time)).setText(
                     String.format(getResources().getString(R.string.date_from_to),
                             event.getString("date"),
