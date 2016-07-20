@@ -16,6 +16,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile_activity);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new ProfileFragment(), "Profile");

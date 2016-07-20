@@ -47,6 +47,7 @@ public class EventDetails extends AppCompatActivity {
         setContentView(R.layout.event_details);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         eventId = getIntent().getIntExtra("event_id", 0);
         this.fetchBasicData();
