@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
+        mLoginFormView = findViewById(R.id.username_login_form);
         mProgressView = findViewById(R.id.login_progress);
 
         findViewById(R.id.link_register).setOnClickListener(new OnClickListener() {
