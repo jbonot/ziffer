@@ -69,6 +69,7 @@
     <string name="view_guest_list">View Guest List</string>
     <string name="notify_join_success">You\'ve been added to the guest list!</string>
     <string name="notify_remove_guest_success">You\'ve been removed from the guest list</string>
+    <string name="notify_delete_success">Event was successfully deleted</string>
 
     <string-array name="notifications_array" formatted="false">
         <item>%s has joined your event \"%s.\"</item>

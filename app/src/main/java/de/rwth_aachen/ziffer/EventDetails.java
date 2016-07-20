@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +37,10 @@ public class EventDetails extends AppCompatActivity {
     private static final String NOTIFICATION_CANCEL_EVENT_ATTENDANCE = "1";
     private static final String NOTIFICATION_DELETE_EVENT = "3";
 
+    private String hostUsername;
+    private List<GuestListItem> guests;
+    private int eventId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +48,41 @@ public class EventDetails extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int eventId = getIntent().getIntExtra("event_id", 0);
-        this.fetchBasicData(eventId);
+        eventId = getIntent().getIntExtra("event_id", 0);
+        this.fetchBasicData();
     }
 
-    private void fetchBasicData(final int eventId){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (hostUsername.equals(SaveSharedPreference.getUserName(this))) {
+            getMenuInflater().inflate(R.menu.event_options, menu);
+            return true;
+        } else {
+            return super.onCreateOptionsMenu(menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_delete) {
+
+            for (GuestListItem guest : this.guests) {
+                BackgroundTask notify = new BackgroundTask();
+                notify.execute("add_notification", guest.getUsername(),
+                        SaveSharedPreference.getUserName(this),
+                        String.valueOf(this.eventId),
+                        String.valueOf(NOTIFICATION_DELETE_EVENT));
+            }
+
+            Toast.makeText(this, getResources().getString(R.string.notify_delete_success),
+                    Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void fetchBasicData(){
         BackgroundTask task = new BackgroundTask();
         task.execute("get_event", String.valueOf(eventId));
         try {
@@ -97,7 +133,7 @@ public class EventDetails extends AppCompatActivity {
                     LocalSettings.Base_URL + "./image/" + host.getString("image"))
                     .into((ImageView) findViewById(R.id.hostIcon));
 
-            final String hostUsername = event.getString("host_username");
+            hostUsername = event.getString("host_username");
             findViewById(R.id.hostInfo).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,7 +147,7 @@ public class EventDetails extends AppCompatActivity {
             guestTask.execute("get_event_guests", String.valueOf(eventId));
             final String guestListJson = guestTask.get();
 
-            List<GuestListItem> guests = new ArrayList<>();
+            guests = new ArrayList<>();
             JSONArray jsonGuestList = new JSONObject(guestListJson).getJSONArray("event_guests");
             for (int i = 0; i < jsonGuestList.length(); i++) {
                 JSONObject jsonGuest = new JSONObject(jsonGuestList.getString(i));
@@ -125,7 +161,6 @@ public class EventDetails extends AppCompatActivity {
             }
 
             if (hostUsername.equals(SaveSharedPreference.getUserName(this))) {
-                this.setActionButton(R.id.button_delete);
                 findViewById(R.id.button_guests).setVisibility(View.VISIBLE);
                 findViewById(R.id.button_guests).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -202,15 +237,6 @@ public class EventDetails extends AppCompatActivity {
                     }
                 }
             });
-
-            findViewById(R.id.button_delete).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: Send notification to all guests
-                    // TODO: Delete event
-                    finish();
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -221,22 +247,14 @@ public class EventDetails extends AppCompatActivity {
             case R.id.button_join:
                 findViewById(R.id.button_join).setVisibility(View.VISIBLE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
-                findViewById(R.id.button_delete).setVisibility(View.GONE);
                 break;
             case R.id.button_cancel_attendance:
                 findViewById(R.id.button_join).setVisibility(View.GONE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.VISIBLE);
-                findViewById(R.id.button_delete).setVisibility(View.GONE);
-                break;
-            case R.id.button_delete:
-                findViewById(R.id.button_join).setVisibility(View.GONE);
-                findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
-                findViewById(R.id.button_delete).setVisibility(View.VISIBLE);
                 break;
             default:
                 findViewById(R.id.button_join).setVisibility(View.GONE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
-                findViewById(R.id.button_delete).setVisibility(View.GONE);
         }
     }
 
