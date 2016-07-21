@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -18,6 +20,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -28,27 +31,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.Locale;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity  {
+    private static final int[] ICONS = new int[] { R.drawable.ic_room_white_36dp,
+            R.drawable.ic_event_white_36dp,
+            R.drawable.ic_account_circle_white_36dp,
+            R.drawable.ic_feedback_white_36dp };
+
+    private static final int[] TITLES = new int[] {
+            R.string.nearby_events,
+            R.string.joined_events,
+            R.string.profile,
+            R.string.notifications
+    };
+
     String user_name = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user_name = extras.getString("user_name");
@@ -77,12 +80,47 @@ public class MainActivity extends AppCompatActivity  {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(new LocalEventsFragment(), getResources().getString(R.string.nearby_events));
-        viewPagerAdapter.addFragments(new JoinedEventsFragment(), getResources().getString(R.string.joined_events));
-        viewPagerAdapter.addFragments(new ProfileFragment(), getResources().getString(R.string.profile));
-        viewPagerAdapter.addFragments(new NotificationsFragment(), getResources().getString(R.string.notifications));
+        viewPagerAdapter.addFragments(new LocalEventsFragment(), "");
+        viewPagerAdapter.addFragments(new JoinedEventsFragment(), "");
+        viewPagerAdapter.addFragments(new ProfileFragment(), "");
+        viewPagerAdapter.addFragments(new NotificationsFragment(), "");
         viewPager.setAdapter(viewPagerAdapter);
-        ((IconTextTabLayout) findViewById(R.id.tabLayout)).setupWithViewPager(viewPager);
+        TabLayout tabLayout = ((TabLayout) findViewById(R.id.tabLayout));
+        tabLayout.setupWithViewPager(viewPager);
+
+
+        tabLayout.getTabAt(0).setIcon(ICONS[0]);
+        tabLayout.getTabAt(1).setIcon(ICONS[1]);
+        tabLayout.getTabAt(2).setIcon(ICONS[2]);
+        tabLayout.getTabAt(3).setIcon(ICONS[3]);
+
+        tabLayout.getTabAt(0).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(3).getIcon().setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_IN);
+
+        getSupportActionBar().setTitle(getResources().getString(TITLES[0]));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+                getSupportActionBar().setTitle(getResources().getString(TITLES[tab.getPosition()]));
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                super.onTabUnselected(tab);
+                tab.getIcon().setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                super.onTabReselected(tab);
+            }
+        });
 
         this.checkForNewNotifications();
     }
