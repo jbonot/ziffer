@@ -28,9 +28,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -38,7 +40,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -50,6 +54,8 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private final String TAG = this.getClass().getSimpleName();
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean zoomNeeded = true;
+    private final List<EventListItem> events = new ArrayList<>();
+    private Map<Marker, Integer> markers = new HashMap<>();
 
     private boolean mPermissionDenied = false;
     private ListAdapter listAdapter;
@@ -62,7 +68,6 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     private double maxLatitude = Double.NaN;
     private double minLongitude = Double.NaN;
     private double maxLongitude = Double.NaN;
-    private String local_data="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +86,7 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
         supportMapFragment.getMapAsync(this);
+        view.findViewById(R.id.event_item).setVisibility(View.GONE);
         listView = (ListView)view.findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -184,6 +190,15 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
                 }
             }
         });
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(getActivity(), EventDetails.class);
+                intent.putExtra("event_id", markers.get(marker));
+                startActivity(intent);
+            }
+        });
     }
 
     private void fetchData(LatLngBounds bounds) {
@@ -238,7 +253,6 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
         try {
             String data = task.get();
             JSONArray arr = new JSONObject(data).getJSONArray("local_events");
-            List<EventListItem> events = new ArrayList<>();
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject event = new JSONObject(arr.getString(i));
                 EventListItem item = new EventListItem();
@@ -249,8 +263,12 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
                 item.setMaxAttendees(event.getInt("max_attendees"));
                 item.setJoinedAttendees(event.getInt("attendees"));
                 events.add(item);
-                mMap.addMarker(new MarkerOptions().position(
-                        new LatLng(event.getDouble("latitude"), event.getDouble("longitude"))));
+
+                Marker marker = mMap.addMarker(new MarkerOptions().position(
+                        new LatLng(event.getDouble("latitude"), event.getDouble("longitude")))
+                        .title(event.getString("title"))
+                        .snippet(event.getString("location_name")));
+                markers.put(marker, event.getInt("event_id"));
             }
 
             listAdapter = new EventListAdapter(getActivity(), events.toArray(new EventListItem[0]));
