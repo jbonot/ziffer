@@ -184,10 +184,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="2 of 8 available spots left"
                 android:id="@+id/availability"
                 android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp" />
 
             <Button
                 android:layout_width="wrap_content"

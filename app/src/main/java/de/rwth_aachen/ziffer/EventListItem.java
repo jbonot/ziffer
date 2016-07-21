@@ -7,6 +7,8 @@ public class EventListItem {
     private String description;
     private String level;
     private int id;
+    private int maxAttendees;
+    private int joinedAttendees;
 
     public EventListItem(){
 
@@ -60,5 +62,21 @@ public class EventListItem {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getMaxAttendees() {
+        return maxAttendees;
+    }
+
+    public void setMaxAttendees(int maxAttendees) {
+        this.maxAttendees = maxAttendees;
+    }
+
+    public int getJoinedAttendees() {
+        return joinedAttendees;
+    }
+
+    public void setJoinedAttendees(int joinedAttendees) {
+        this.joinedAttendees = joinedAttendees;
     }
 }

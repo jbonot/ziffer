@@ -46,7 +46,6 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="2 of 8 Guests have joined"
             android:id="@+id/attendance"
             android:layout_marginTop="6dp" />
     </LinearLayout>

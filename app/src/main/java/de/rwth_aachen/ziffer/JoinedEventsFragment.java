@@ -59,6 +59,8 @@ public class JoinedEventsFragment extends Fragment {
                 item.setHeadline(event.getString("title"));
                 item.setDescription(event.getString("location_name") + ", " + event.getString("location_address"));
                 item.setLevel(event.getString("german_level"));
+                item.setMaxAttendees(event.getInt("max_attendees"));
+                item.setJoinedAttendees(event.getInt("count_attending"));
                 events.add(item);
             }
 

@@ -34,6 +34,14 @@ public class EventListAdapter extends ArrayAdapter<EventListItem> {
         ((TextView)rowView.findViewById(R.id.date))
                 .setText(this.values[position].getDescription());
 
+        if (this.values[position].getMaxAttendees() > 0) {
+            ((TextView) rowView.findViewById(R.id.attendance)).setText(
+                    String.format(rowView.getContext().getResources().getString(R.string.attendance_of),
+                            this.values[position].getJoinedAttendees())
+                            + " " + rowView.getContext().getResources().getQuantityString(
+                            R.plurals.joined_guests, this.values[position].getMaxAttendees(),
+                            this.values[position].getMaxAttendees()));
+        }
         return rowView;
     }
 }

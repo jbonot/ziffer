@@ -151,6 +151,11 @@ public class EventDetails extends AppCompatActivity {
                 guests.add(guest);
             }
 
+            ((TextView)findViewById(R.id.availability)).setText(
+                    String.format(getResources().getString(R.string.attendance_of), guests.size())
+                            + " " + getResources().getQuantityString(R.plurals.joined_guests,
+                            event.getInt("max_attendees"), event.getInt("max_attendees")));
+
             if (hostUsername.equals(SaveSharedPreference.getUserName(this))) {
                 findViewById(R.id.button_guests).setVisibility(View.VISIBLE);
                 findViewById(R.id.button_guests).setOnClickListener(new View.OnClickListener() {

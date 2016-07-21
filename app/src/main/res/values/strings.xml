@@ -55,6 +55,7 @@
     <string name="hosted_by" formatted="false">Hosted by %s %s</string>
     <string name="guest_list">Guest List</string>
     <string name="details">Event Details</string>
+    <string name="attendance_of" formatted="false">%d of</string>
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -99,5 +100,10 @@
     <plurals name="days_ago">
         <item quantity="one">%d day ago</item>
         <item quantity="other">%d days ago</item>
+    </plurals>
+
+    <plurals name="joined_guests">
+        <item quantity="one">%d guest has joined</item>
+        <item quantity="other">%d guests have joined</item>
     </plurals>
 </resources>

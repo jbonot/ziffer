@@ -246,6 +246,8 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
                 item.setHeadline(event.getString("title"));
                 item.setDescription(event.getString("location_name") + ", " + event.getString("address"));
                 item.setLevel(event.getString("german_level"));
+                item.setMaxAttendees(event.getInt("max_attendees"));
+                item.setJoinedAttendees(event.getInt("attendees"));
                 events.add(item);
                 mMap.addMarker(new MarkerOptions().position(
                         new LatLng(event.getDouble("latitude"), event.getDouble("longitude"))));
