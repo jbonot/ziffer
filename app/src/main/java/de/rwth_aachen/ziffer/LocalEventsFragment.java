@@ -86,7 +86,6 @@ public class LocalEventsFragment extends Fragment implements GoogleMap.OnMyLocat
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Add sample data to event list.
         supportMapFragment.getMapAsync(this);
-        view.findViewById(R.id.event_item).setVisibility(View.GONE);
         listView = (ListView)view.findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

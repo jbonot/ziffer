@@ -38,60 +38,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         // LocalSettings class is ignored from the repository.  Must be created locally.
         String user_reg = LocalSettings.Base_URL + "user_registration.php";
         String profile_data = LocalSettings.Base_URL + "profile_data.php";
-        String reg_url = LocalSettings.Base_URL+ "register.php";
         String login_url = LocalSettings.Base_URL + "login.php";
 
         String method = params[0];
         Log.d("filecheck",user_reg);
-        if (method.equals("event")) {
-            String user_name_host = params[1];
-            String german_level_event = params[2];
-            String title = params[3];
-            String location = params[4];
-            String date = params [5];
-            String start_time = params [6];
-            String end_time = params [7];
-            String min_attendees = params [8];
-            String max_attendees = params[9];
-            String description = params [10];
-
-            Log.d("param",german_level_event);
-            try {
-                URL url = new URL(reg_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                //httpURLConnection.setDoInput(true);
-                OutputStream OS = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-                String data = URLEncoder.encode("user_name_host", "UTF-8") + "=" + URLEncoder.encode(user_name_host, "UTF-8") + "&" +
-                        URLEncoder.encode("german_level_event", "UTF-8") + "=" + URLEncoder.encode(german_level_event, "UTF-8") + "&" +
-                        URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") + "&" +
-                        URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&" +
-                        URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" +
-                        URLEncoder.encode("start_time", "UTF-8") + "=" + URLEncoder.encode(start_time, "UTF-8") + "&" +
-                        URLEncoder.encode("end_time", "UTF-8") + "=" + URLEncoder.encode(end_time, "UTF-8") + "&" +
-                        URLEncoder.encode("min_attendees", "UTF-8") + "=" + URLEncoder.encode(min_attendees, "UTF-8") + "&" +
-                        URLEncoder.encode("max_attendees", "UTF-8") + "=" + URLEncoder.encode(max_attendees, "UTF-8") + "&" +
-                        URLEncoder.encode("1", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8");
-                Log.d("Ziffer",data);
-                bufferedWriter.write(data);
-
-
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                OS.close();
-                InputStream IS = httpURLConnection.getInputStream();
-                IS.close();
-                //httpURLConnection.connect();
-                httpURLConnection.disconnect();
-                return "Event Registered Successfully";
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (method.equals("get_local_events")) {
+        if (method.equals("get_local_events")) {
             try {
                 String urlParams =
                         "min_lat=" + URLEncoder.encode(params[1], "UTF-8")

@@ -121,14 +121,12 @@ public class EventCreate extends AppCompatActivity {
 
         this.setupSpinner((Spinner) findViewById(R.id.maxAttendees), categories);
 
-        findViewById(R.id.editText2).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    openLocationPicker(v);
-                }
-            }
-        });
+        findViewById(R.id.location_button).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  openLocationPicker(v);
+              }
+          });
     }
 
     @Override
@@ -140,33 +138,34 @@ public class EventCreate extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Spinner spinnerEventType = (Spinner) findViewById(R.id.spinnerEventType);
-        EditText editText = (EditText) findViewById(R.id.editText);
-        EditText editText2 = (EditText) findViewById(R.id.editText2);
-        TextView dateStart = (TextView) findViewById(R.id.dateStart);
-        TextView timeStart = (TextView) findViewById(R.id.timeStart);
-        TextView timeEnd = (TextView) findViewById(R.id.timeEnd);
-        Spinner maxAttendees = (Spinner) findViewById(R.id.maxAttendees);
-        EditText description = (EditText) findViewById(R.id.description);
 
         if (id == R.id.action_save) {
-           Log.d("zifferspinner",String.valueOf(spinnerEventType.getSelectedItem()));
-            String method = "event";
-            String user_name_host,sEventType, eText,eText2, dStart, tStart, tEnd, miAttendees, maAttendees, descr;
-            user_name_host= "jasimwhd";
-            sEventType = String.valueOf(spinnerEventType.getSelectedItem());
-            eText = editText.getText().toString();
-            eText2 = editText2.getText().toString();
-            dStart = dateStart.getText().toString();
-            tStart = timeStart.getText().toString();
-            tEnd = timeEnd.getText().toString();
-            miAttendees = String.valueOf(0);
-            maAttendees = String.valueOf(maxAttendees.getSelectedItem());
-            descr = description.getText().toString();
+            BackgroundTaskCreateEvent task = new BackgroundTaskCreateEvent();
+            task.execute("create_event",
+                    String.valueOf(eventLocation.getName()),
+                    String.valueOf(eventLocation.getAddress()),
+                    String.valueOf(eventLocation.getId()),
+                    String.valueOf(eventLocation.getLatLng().latitude),
+                    String.valueOf(eventLocation.getLatLng().longitude),
+                    SaveSharedPreference.getUserName(this),
+                    ((Spinner) findViewById(R.id.spinnerEventType)).getSelectedItem().toString(),
+                    ((TextView) findViewById(R.id.title)).getText().toString(),
+                    ((TextView) findViewById(R.id.dateStart)).getText().toString(),
+                    ((TextView) findViewById(R.id.timeStart)).getText().toString(),
+                    ((TextView) findViewById(R.id.timeEnd)).getText().toString(),
+                    ((Spinner) findViewById(R.id.maxAttendees)).getSelectedItem().toString(),
+                    ((TextView) findViewById(R.id.description)).getText().toString());
 
+            try {
+                Intent intent = new Intent(this, EventDetails.class);
+                intent.putExtra("event_id", Integer.valueOf(task.get()));
+                startActivity(intent);
+                Toast.makeText(this, getResources().getString(R.string.notify_create_success),
+                        Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            BackgroundTask backgroundTask = new BackgroundTask(this);
-            backgroundTask.execute(method,user_name_host,sEventType,eText, eText2,dStart,tStart,tEnd,miAttendees,maAttendees,descr);
             finish();
             return true;
         }
@@ -193,7 +192,9 @@ public class EventCreate extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                ((TextView)findViewById(R.id.editText2)).setText(place.getName());
+                findViewById(R.id.location_info).setVisibility(View.VISIBLE);
+                ((TextView)findViewById(R.id.location_name)).setText(place.getName());
+                ((TextView)findViewById(R.id.location_address)).setText(place.getAddress());
                 this.eventLocation = place;
             }
         }
