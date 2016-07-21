@@ -20,16 +20,16 @@ public class EventListItem {
 
     public int getColor() {
         if (this.level.contains("A1")){
-            return Color.RED;
+            return Color.parseColor("#cc0066");
         } else if (this.level.contains("A2")) {
-            return Color.GREEN;
+            return Color.parseColor("#e6b800");
         } else if (this.level.contains("B1")) {
-            return Color.MAGENTA;
+            return Color.parseColor("#00802b");
         } else if (this.level.contains("B2")) {
-            return Color.YELLOW;
+            return Color.parseColor("#336699");
         }
 
-        return Color.CYAN;
+        return Color.parseColor("#990099");
     }
 
     public String getLevel() { return this.level; }
