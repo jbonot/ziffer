@@ -1,6 +1,7 @@
 package de.rwth_aachen.ziffer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -39,6 +42,20 @@ public class EventDetails extends AppCompatActivity {
 
         eventId = getIntent().getIntExtra("event_id", 0);
         this.fetchBasicData();
+
+        findViewById(R.id.location_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://maps.google.de/maps?q=" + URLEncoder.encode(
+                                    ((TextView) findViewById(R.id.address)).getText().toString(),
+                                    "UTF-8"))));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
