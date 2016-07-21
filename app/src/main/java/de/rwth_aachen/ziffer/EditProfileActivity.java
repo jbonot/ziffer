@@ -229,8 +229,7 @@ public class EditProfileActivity extends AppCompatActivity {
             backgroundTask.execute("profile_data",user_name,firstName,lastName,dob,gLevelSpinner,descr,image_str);
 
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
-
-            i.putExtra("userkey",user_name);
+            SaveSharedPreference.setUserName(this, user_name);
             startActivity(i);
             finish();
         }
