@@ -18,10 +18,10 @@ if ($con->connect_error) {
 
 $sql = "SELECT e.event_id, e.german_level_event, e.title, e.date,
 		e.max_attendees, e.name, e.address, e.latitude,
-		e.longitude, e.start_time, guests.attendees
+		e.longitude, e.start_time, IFNULL(guests.attendees,0)
 		FROM (SELECT event_id, COUNT(*) AS attendees
 			 FROM event_guests GROUP BY event_id) AS guests
-		JOIN (SELECT event.event_id, event.german_level_event, event.title, event.date,
+		RIGHT JOIN (SELECT event.event_id, event.german_level_event, event.title, event.date,
 			event.max_attendees, location.name, location.address, location.latitude,
 			location.longitude, event.start_time
 			FROM event JOIN (SELECT location_id, name, address, latitude, longitude
