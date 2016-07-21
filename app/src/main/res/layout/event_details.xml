@@ -170,11 +170,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Hello! I have room to tutor 8 people at my house.  Please bring any learning materials you already have!"
-                android:id="@+id/description"
+                    android:id="@+id/description"
                 android:minHeight="100dp"
                 android:padding="16dp"
                 android:background="@drawable/background_border" />
