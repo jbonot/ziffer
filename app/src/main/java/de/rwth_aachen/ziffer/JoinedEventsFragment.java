@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -59,7 +60,6 @@ public class JoinedEventsFragment extends Fragment {
                 item.setDescription(event.getString("location_name") + ", " + event.getString("location_address"));
                 item.setLevel(event.getString("german_level"));
                 events.add(item);
-
             }
 
             listAdapter = new EventListAdapter(getActivity(), events.toArray(new EventListItem[0]));
@@ -76,6 +76,7 @@ public class JoinedEventsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), EventDetails.class);
+                intent.putExtra("event_id", Integer.valueOf(((TextView) view.findViewById(R.id.event_id)).getText().toString()));
                 startActivity(intent);
             }
         });
