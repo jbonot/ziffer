@@ -260,14 +260,17 @@ public class EventDetails extends AppCompatActivity {
             case R.id.button_join:
                 findViewById(R.id.button_join).setVisibility(View.VISIBLE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
+                findViewById(R.id.inform_joined_status).setVisibility(View.GONE);
                 break;
             case R.id.button_cancel_attendance:
                 findViewById(R.id.button_join).setVisibility(View.GONE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.VISIBLE);
+                findViewById(R.id.inform_joined_status).setVisibility(View.VISIBLE);
                 break;
             default:
                 findViewById(R.id.button_join).setVisibility(View.GONE);
                 findViewById(R.id.button_cancel_attendance).setVisibility(View.GONE);
+                findViewById(R.id.inform_joined_status).setVisibility(View.GONE);
         }
     }
 }

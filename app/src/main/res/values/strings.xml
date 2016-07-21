@@ -68,6 +68,7 @@
 	<string name="moments_ago">Moments ago</string>
 
     <string name="join_event">Join Event</string>
+    <string name="inform_status_joined">You have joined this event</string>
     <string name="cancel_attendance">Cancel Attendance</string>
     <string name="delete_event">Delete Event</string>
     <string name="view_guest_list">View Guest List</string>
